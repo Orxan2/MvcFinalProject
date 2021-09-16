@@ -5,10 +5,37 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Remove="Migrations\20210916112718_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916112718_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916113044_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916113044_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916120349_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916120349_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916120628_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916120628_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916124641_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916124641_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916125035_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916125035_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916130209_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916130209_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916131309_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916131309_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916131453_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916131453_BlogAndCategorytablesAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.18" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.18">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
