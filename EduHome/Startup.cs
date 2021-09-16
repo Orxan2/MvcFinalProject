@@ -34,7 +34,7 @@ namespace EduHome
             {
                 endpoints.MapControllerRoute(
                     name:"admin",
-                    pattern:"{area=admin}/{controller=dashboard}/{action=index}/{id?}"
+                    pattern:"{area:exists}/{controller=dashboard}/{action=index}/{id?}"
                     );
                 endpoints.MapControllerRoute(
                    name: "default",
