@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models.Entity
 {
-    public class Blog:BaseEntity
+    public class Post:BaseEntity
     {
         [Required, StringLength(maximumLength: 100)]
         public string Title { get; set; }

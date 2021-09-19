@@ -23,6 +23,12 @@
     <Compile Remove="Migrations\20210916131309_BlogAndCategorytablesAdded.Designer.cs" />
     <Compile Remove="Migrations\20210916131453_BlogAndCategorytablesAdded.cs" />
     <Compile Remove="Migrations\20210916131453_BlogAndCategorytablesAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210916131657_BlogAndCategorytablesAdded.cs" />
+    <Compile Remove="Migrations\20210916131657_BlogAndCategorytablesAdded.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\admin\assets\plugins\Multi-Select-Plugin-jQuery-MagicSuggest\magicsuggest.js" />
   </ItemGroup>
 
   <ItemGroup>

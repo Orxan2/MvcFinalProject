@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EduHome.ViewModels
 {
-    public class BlogDetailsVM
+    public class PostVM
     {
-        public Blog Blog { get; set; }
-        public List<Category> Categories { get; set; }       
+        public List<Post> Posts { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

@@ -13,13 +13,17 @@ namespace EduHome.DataContext
         {
         }
 
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Blog> Categories { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<CourseTheme> CourseThemes { get; set; }
+        public DbSet<CourseThemeCourse> CourseThemeCourses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Blog>().
+            modelBuilder.Entity<Post>().
                 Property(p => p.Date).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
             modelBuilder.Entity<Category>(e => e.HasData(
@@ -56,8 +60,8 @@ namespace EduHome.DataContext
                 )
             );
 
-            modelBuilder.Entity<Blog>(e => e.HasData(
-               new Blog
+            modelBuilder.Entity<Post>(e => e.HasData(
+               new Post
                {
                    Id = 1,
                    ByWhom= "Orxan",
@@ -69,7 +73,7 @@ namespace EduHome.DataContext
                    CategoryId = 1,
                    Image = "blog1.jpg"
                },
-              new Blog
+              new Post
               {
                   Id = 2,
                   ByWhom = "Cavid",
@@ -81,7 +85,7 @@ namespace EduHome.DataContext
                   CategoryId = 2,
                   Image = "blog2.jpg"
               },
-              new Blog
+              new Post
               {
                   Id = 3,
                   ByWhom = "Elvin",
@@ -93,7 +97,7 @@ namespace EduHome.DataContext
                   CategoryId = 1,
                   Image = "blog3.jpg"
               },
-              new Blog
+              new Post
               {
                   Id = 4,
                   ByWhom = "Serxan",
@@ -103,7 +107,7 @@ namespace EduHome.DataContext
                    "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
                   CategoryId = 3,
-                  Image = "blog4.jpg"
+                  Image = "blog4.jpg"                  
               }
                )
            );

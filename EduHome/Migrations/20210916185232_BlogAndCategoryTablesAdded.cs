@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EduHome.Migrations
 {
-    public partial class BlogAndCategorytablesAdded : Migration
+    public partial class BlogAndCategoryTablesAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,11 +17,11 @@ namespace EduHome.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Blog",
+                name: "Blogs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -35,17 +35,17 @@ namespace EduHome.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blog", x => x.Id);
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Blog_Category_CategoryId",
+                        name: "FK_Blogs_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Category",
+                table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -58,7 +58,7 @@ namespace EduHome.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Blog",
+                table: "Blogs",
                 columns: new[] { "Id", "ByWhom", "CategoryId", "Details", "Image", "Title" },
                 values: new object[,]
                 {
@@ -69,18 +69,18 @@ namespace EduHome.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Blog_CategoryId",
-                table: "Blog",
+                name: "IX_Blogs_CategoryId",
+                table: "Blogs",
                 column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Blog");
+                name: "Blogs");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
         }
     }
 }

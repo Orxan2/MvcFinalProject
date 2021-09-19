@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    [Migration("20210916131657_BlogAndCategorytablesAdded")]
-    partial class BlogAndCategorytablesAdded
+    [Migration("20210918212747_TablesAddedAboutCourse")]
+    partial class TablesAddedAboutCourse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,124 @@ namespace EduHome.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EduHome.Models.Entity.Blog", b =>
+            modelBuilder.Entity("EduHome.Models.Entity.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "CSS Engineering"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Political Science"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Micro Biology"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "HTML5 & CSS3"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Web Design"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "PHP"
+                        });
+                });
+
+            modelBuilder.Entity("EduHome.Models.Entity.Course", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("EduHome.Models.Entity.CourseTheme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseThemes");
+                });
+
+            modelBuilder.Entity("EduHome.Models.Entity.CourseThemeCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseThemeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("CourseThemeId");
+
+                    b.ToTable("CourseThemeCourses");
+                });
+
+            modelBuilder.Entity("EduHome.Models.Entity.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +172,7 @@ namespace EduHome.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Blog");
+                    b.ToTable("Posts");
 
                     b.HasData(
                         new
@@ -96,56 +213,28 @@ namespace EduHome.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EduHome.Models.Entity.Category", b =>
+            modelBuilder.Entity("EduHome.Models.Entity.CourseThemeCourse", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasOne("EduHome.Models.Entity.Category", "Category")
+                        .WithMany("CourseThemeCourses")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                    b.HasOne("EduHome.Models.Entity.Course", "Course")
+                        .WithMany("CourseThemeCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "CSS Engineering"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Political Science"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Micro Biology"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "HTML5 & CSS3"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Web Design"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "PHP"
-                        });
+                    b.HasOne("EduHome.Models.Entity.CourseTheme", "CourseTheme")
+                        .WithMany("CourseThemeCourses")
+                        .HasForeignKey("CourseThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("EduHome.Models.Entity.Blog", b =>
+            modelBuilder.Entity("EduHome.Models.Entity.Post", b =>
                 {
                     b.HasOne("EduHome.Models.Entity.Category", "Category")
                         .WithMany("Blogs")

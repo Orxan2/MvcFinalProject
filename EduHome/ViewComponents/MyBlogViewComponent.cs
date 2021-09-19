@@ -19,12 +19,19 @@ namespace EduHome.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int quantity)
         {
-             BlogVM blogVM = new BlogVM
+            int pag = 0; 
+            if (ViewBag.Pagination != null)
             {
-                 Blogs = _db.Blogs.Include(c => c.Category).Take(quantity).ToList()
+               pag = (ViewBag.Pagination-1) * quantity;
+            }
+            
+
+            PostVM postVM = new PostVM
+            {
+                 Posts = _db.Posts.Include(c => c.Category).Skip(pag).Take(quantity).ToList()
             };
 
-            return View(await Task.FromResult(blogVM));
+            return View(await Task.FromResult(postVM));
         }
     }
 

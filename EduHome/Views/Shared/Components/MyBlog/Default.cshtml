@@ -1,27 +1,27 @@
-﻿@model BlogVM
+﻿@model PostVM
 @{
     Layout = null;
 }
 
 <div class="row">
 
-    @foreach (var blog in Model.Blogs)
+    @foreach (var post in Model.Posts)
     {
         <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="single-blog">
                 <div class="blog-img">
-                    <a href="blog-details.html"><img src="~/img/blog/@blog.Image" alt="blog"></a>
+                    <a href="blog-details.html"><img src="~/img/blog/@post.Image" alt="blog"></a>
                     <div class="blog-hover">
                         <a href="blog-details.html"><i class="fa fa-link"></i></a>
                     </div>
                 </div>
                 <div class="blog-content">
                     <div class="blog-top">
-                        <p>@blog.ByWhom  /  @blog.Date  /  <i class="fa fa-comments-o"></i> 4</p>
+                        <p>@post.ByWhom  /  @post.Date  /  <i class="fa fa-comments-o"></i> 4</p>
                     </div>
                     <div class="blog-bottom">
-                        <h2><a href="blog-details.html">@blog.Title</a></h2>
-                        <a asp-controller="Blog" asp-action="BlogDetails" asp-route-id="@blog.Id" >read more</a>
+                        <h2><a href="blog-details.html">@post.Title</a></h2>
+                        <a asp-controller="Post" asp-action="PostDetail" asp-route-id="@post.Id" >read more</a>
                     </div>
                 </div>
             </div>

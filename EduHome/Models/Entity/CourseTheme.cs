@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models.Entity
 {
-    public class Category:BaseEntity
+    public class CourseTheme:BaseEntity
     {
-        [Required, StringLength(maximumLength: 50)]
-        public string Name { get; set; }
-        public ICollection<Post> Blogs { get; set; }
+        [Required,StringLength(maximumLength:50)]
+        public string Title { get; set; }
+        public string Text { get; set; }
         public List<CourseThemeCourse> CourseThemeCourses { get; set; }
     }
 }
