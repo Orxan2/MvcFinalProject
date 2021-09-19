@@ -8,11 +8,11 @@ namespace EduHome.Models.Entity
 {
     public class CourseThemeCourse:BaseEntity
     {
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
         public Course Course { get; set; }
-        public int CourseThemeId { get; set; }
+        public int? CourseThemeId { get; set; }
         public CourseTheme CourseTheme { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
     }
 }

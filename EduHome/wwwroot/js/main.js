@@ -20,11 +20,31 @@
 	$('.main-menu nav').meanmenu({
 		meanScreenWidth: "767",
 		meanMenuContainer: '.mobile-menu'
-	});
-    
-    
+	});    
+
     /* last  2 li child add class */
     $('ul.menu>li').slice(-2).addClass('last-elements');
+   
+
+    /*------------------------------------
+     Send Messages Partial View     
+    --------------------------------------*/
+    $('#send').on('click', function() {
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var subject = $("#subject").val();
+        var message = $("#message").val();
+        $.ajax({
+            url: `/post/SendMessages?name=${name}&email=${email}&subject=${subject}&message=${message}`,
+            type: "Get",
+            success: function (response) {
+                console.log(response);
+                $('#addHere').append(response);
+            }
+        });
+
+    });
+
 /*------------------------------------
 	Owl Carousel
 --------------------------------------*/
