@@ -20,7 +20,7 @@ namespace EduHome.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int quantity)
         {
             int pag = 0; 
-            if (ViewBag.Pagination != null)
+            if (ViewBag.Pagination != null && ViewBag.Pagination != 0)
             {
                pag = (ViewBag.Pagination-1) * quantity;
             }

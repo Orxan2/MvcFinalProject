@@ -2,11 +2,8 @@
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EduHome.Controllers
 {
@@ -16,11 +13,13 @@ namespace EduHome.Controllers
         public PostController(EduhomeDbContext db)
         {
             _db = db;
+            
         }
-        public IActionResult Index(int pag)
+        public IActionResult Index(int id)
         {
-            ViewBag.Pagination = pag;
-            int count = Convert.ToInt32(Math.Ceiling(_db.Posts.Count() / 9.0));          
+
+            ViewBag.Pagination = id;
+            int count = Convert.ToInt32(Math.Ceiling(_db.Posts.Count() / 9.0));            
             return View(count);
         }
 

@@ -7,15 +7,16 @@
 <div class="blog-area pt-150 pb-150">
     <div class="container">
         <div class="row">
-            @await Component.InvokeAsync("MyBlog",9)       
+            @await Component.InvokeAsync("MyBlog", 9)
         </div>
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="pagination">
                     <ul>
                         @for (int count = 1; count <= Model; count++)
                         {
-                            <li><a asp-action="Index" asp-route-id="@count">@count</a></li>
+                            <li><a class="btn" asp-action="Index" asp-route-id="@count">@count</a></li>
                         }
                     </ul>
                 </div>
