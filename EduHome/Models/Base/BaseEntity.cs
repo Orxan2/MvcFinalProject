@@ -7,6 +7,6 @@ namespace EduHome.Models.Base
 {
     public class BaseEntity
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
     }
 }

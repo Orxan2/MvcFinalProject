@@ -14,39 +14,40 @@
                     </div>
                     <div class="blog-details-content">
                         <h2>@Model.Post.Title</h2>
-                        <h6>@Model.Post.ByWhom  /  @Model.Post.Date  /  <i class="fa fa-comments-o"></i> 4</h6>
+                        <h6>@Model.Post.ByWhom  /  @Model.Post.Date  /  <i class="fa fa-comments-o"></i> @Model.PostMessages.Count()</h6>
                         @Html.Raw(Model.Post.Details.ToString())
                     </div>          
                     <div class="reply-area">
-                        <ul class="list-group border-0">
-                            <h3>LEAVE A REPLY</h3>
+                        <h3>LEAVE A REPLY</h3>
+                        <ul class="list-group border-0 my-4">
                             @foreach (var message in Model.PostMessages)
                             {
-                                <li class="list-group-item list-group-item-info">
-                                    <p>@message.Message</p>
-                                </li>
+                            <li class="list-group-item list-group-item-info border-0">
+                                <h1>@message.Email</h1>
+                                <p>@message.Message</p>
+                            </li>
                             }
                         </ul>
                         <form method="post">
                             <div class="row">
                                 <div class="col-md-12">
                                     <label asp-for="PostMessage.Name">Name</label>
-                                    <input asp-for="PostMessage.Name" />
+                                    <input asp-for="PostMessage.Name" class="form-control" />
                                     <span asp-validation-for="PostMessage.Name" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-12">
                                     <label asp-for="PostMessage.Email">Email</label>
-                                    <input asp-for="PostMessage.Email" />
+                                    <input asp-for="PostMessage.Email" class="form-control" />
                                     <span asp-validation-for="PostMessage.Email" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-12">
                                     <label asp-for="PostMessage.Subject">Subject</label>
-                                    <input asp-for="PostMessage.Subject" />
+                                    <input asp-for="PostMessage.Subject" class="form-control" />
                                     <span asp-validation-for="PostMessage.Subject" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-12">
                                     <label asp-for="PostMessage.Message">Message</label>
-                                    <textarea asp-for="PostMessage.Message"></textarea>
+                                    <textarea asp-for="PostMessage.Message" class="form-control"></textarea>
                                     <span asp-validation-for="PostMessage.Message" class="text-danger"></span>
                                 </div>
                             </div>

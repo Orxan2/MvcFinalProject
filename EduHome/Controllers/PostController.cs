@@ -43,7 +43,7 @@ namespace EduHome.Controllers
                 Post = post,
                 Categories = _db.Categories.ToList(),
                 LatestPosts = _db.Posts.OrderByDescending(p => p.Id).Take(3).ToList(),
-                PostMessages = _db.PostMessages.Include(pm=>pm.Post).ToList()
+                PostMessages = _db.PostMessages.Include(pm=>pm.Post).Where(pm=>pm.PostId == id).ToList()
             };
 
             return View(postDetailsVM);
@@ -69,7 +69,7 @@ namespace EduHome.Controllers
                 Post = post,
                 Categories = _db.Categories.ToList(),
                 LatestPosts = _db.Posts.Include(p => p.Category).OrderByDescending(p => p.Id).Take(3).ToList(),
-                PostMessages = _db.PostMessages.ToList(),
+                PostMessages = _db.PostMessages.Include(pm => pm.Post).Where(pm => pm.PostId == id).ToList(),
                 PostMessage = postMessage
             };
 

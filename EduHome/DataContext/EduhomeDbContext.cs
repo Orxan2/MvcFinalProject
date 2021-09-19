@@ -27,6 +27,9 @@ namespace EduHome.DataContext
             modelBuilder.Entity<Post>().
                 Property(p => p.Date).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
+            modelBuilder.Entity<Post>().
+               Property(p => p.IsDeleted).HasDefaultValue("false");
+
             modelBuilder.Entity<Category>(e => e.HasData(
                 new Category
                 {
@@ -60,12 +63,12 @@ namespace EduHome.DataContext
                    }
                 )
             );
-            
+
             modelBuilder.Entity<Post>(e => e.HasData(
                new Post
                {
                    Id = 1,
-                   ByWhom= "Orxan",
+                   ByWhom = "Orxan",
                    Title = "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA",
                    Details = "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p>" +
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
@@ -109,7 +112,7 @@ namespace EduHome.DataContext
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
                   CategoryId = 3,
                   Image = "blog4.jpg"
-                  
+
               }
                )
            );

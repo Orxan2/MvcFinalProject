@@ -21,6 +21,8 @@ namespace EduHome.Models.Entity
         public Nullable<DateTime> Date { get; set; }
         [DataType(dataType:DataType.Text)]
         public string Details { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public Boolean IsDeleted { get; set; }
         public Category Category { get; set; }
         public int? CategoryId { get; set; }
         public List<PostMessage> PostMessages { get; set; }
