@@ -19,6 +19,9 @@ namespace EduHome.DataContext
         public DbSet<CourseTheme> CourseThemes { get; set; }
         public DbSet<CourseThemeCourse> CourseThemeCourses { get; set; }
         public DbSet<PostMessage> PostMessages { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Speaker> Speakers { get; set; }
+        public DbSet<TimeInterval> TimeIntervals { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -116,6 +119,97 @@ namespace EduHome.DataContext
               }
                )
            );
+
+            modelBuilder.Entity<Speaker>(e => e.HasData(
+               new Speaker
+               {
+                   Id = 1,
+                  Fullname = "Anthony Smith" ,
+                  Professional = "CEO, Hastech",
+                  Image = "speaker1"
+               },
+               new Speaker
+               {
+                   Id = 2,
+                   Fullname = "Lucy Rose",
+                   Professional = "Developer, STD",
+                   Image = "speaker2"
+               })
+           );
+
+            modelBuilder.Entity<TimeInterval>(e => e.HasData(
+               new TimeInterval
+               {
+                   Id = 1,
+                  Name = "9:30am - 4:45pm"
+               },
+               new TimeInterval
+               {
+                   Id = 2,
+                   Name = " 9:30am - 4:45pm"                   
+               })
+           );
+            modelBuilder.Entity<Event>(e => e.HasData(
+              new Event
+              {
+                  Id = 1,
+                  ByWhom = "Emin",
+                  Title = "I'm Smartest man",
+                  Details = "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
+                  "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
+                  CategoryId = 1,
+                  Image = "event1.jpg",
+                  TimeIntervalId = 1,
+                  Address = "Cristal Centre, 254 New Yourk"
+
+              },
+             new Event
+             {
+                 Id = 2,
+                 ByWhom = "Cavid",
+                 Title = "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA",
+                 Details = "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
+                  "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
+                 CategoryId = 1,
+                 Image = "event2.jpg",
+                 TimeIntervalId = 2,
+                 Address = "Cristal Centre, 254 New Yourk"
+             },
+             new Event
+             {
+                 Id = 3,
+                 ByWhom = "Elvin",
+                 Title = "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA",
+                 Details = "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
+                  "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
+                 CategoryId = 1,
+                 Image = "event3.jpg",
+                 TimeIntervalId = 1,
+                 Address = "Cristal Centre, 254 New Yourk"
+             },
+             new Event
+             {
+                 Id = 4,
+                 ByWhom = "Serxan",
+                 Title = "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA",
+                 Details = "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
+                  "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
+                  "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
+                 CategoryId = 3,
+                 Image = "event4.jpg",
+                 TimeIntervalId = 2,
+                 Address = "Cristal Centre, 254 New Yourk"
+
+             }
+              )
+          );
         }
     }
 }

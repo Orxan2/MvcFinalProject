@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduHome.Models.Entity
 {
-    public class Post:BaseEntity
+    public class Event : BaseEntity
     {
         [Required, StringLength(maximumLength: 100)]
         public string Title { get; set; }
@@ -18,14 +18,16 @@ namespace EduHome.Models.Entity
         [Required, NotMapped]
         public IFormFile Photo { get; set; }
         [Required]
-        public string ByWhom { get; set; }       
-        public Nullable<DateTime> Date { get; set; }
-        [DataType(dataType:DataType.Text)]
+        public string ByWhom { get; set; }
+        public string Address { get; set; }
+        [DataType(dataType: DataType.Text)]
         public string Details { get; set; }
         public bool IsDeleted { get; set; }
         public Category Category { get; set; }
         public int? CategoryId { get; set; }
+        public TimeInterval TimeInterval { get; set; }
+        public int? TimeIntervalId { get; set; }
         public List<PostMessage> PostMessages { get; set; }
-
+        public List<EventSpeaker> EventSpeakers { get; set; }
     }
 }

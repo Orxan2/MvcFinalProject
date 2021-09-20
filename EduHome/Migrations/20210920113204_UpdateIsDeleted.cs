@@ -56,6 +56,14 @@ namespace EduHome.Migrations
                 keyColumn: "Id",
                 keyValue: 3);
 
+            migrationBuilder.AlterColumn<string>(
+                name: "Image",
+                table: "Posts",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
@@ -132,6 +140,13 @@ namespace EduHome.Migrations
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 3);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Image",
+                table: "Posts",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string));
 
             migrationBuilder.InsertData(
                 table: "Categories",

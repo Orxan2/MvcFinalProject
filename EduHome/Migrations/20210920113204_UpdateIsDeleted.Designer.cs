@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    [Migration("20210920063206_UpdateIsDeleted")]
+    [Migration("20210920113204_UpdateIsDeleted")]
     partial class UpdateIsDeleted
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -161,6 +161,7 @@ namespace EduHome.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")

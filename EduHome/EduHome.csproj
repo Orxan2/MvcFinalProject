@@ -49,6 +49,12 @@
     <Compile Remove="Migrations\20210920062210_UpdateIsDeleted.Designer.cs" />
     <Compile Remove="Migrations\20210920062858_UpdateIsDeleted.cs" />
     <Compile Remove="Migrations\20210920062858_UpdateIsDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20210920063206_UpdateIsDeleted.cs" />
+    <Compile Remove="Migrations\20210920063206_UpdateIsDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20210920130453_AddedEventTable.cs" />
+    <Compile Remove="Migrations\20210920130453_AddedEventTable.Designer.cs" />
+    <Compile Remove="Migrations\20210920131847_AddedEventTable.cs" />
+    <Compile Remove="Migrations\20210920131847_AddedEventTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

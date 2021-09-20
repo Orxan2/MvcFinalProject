@@ -14,8 +14,7 @@ namespace EduHome.Controllers
         private readonly EduhomeDbContext _db;
         public PostController(EduhomeDbContext db)
         {
-            _db = db;
-            
+            _db = db;            
         }
         public IActionResult Index(int id)
         {
