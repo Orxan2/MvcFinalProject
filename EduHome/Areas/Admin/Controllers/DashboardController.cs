@@ -2,6 +2,7 @@
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -73,50 +74,113 @@ namespace EduHome.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            PostCategoryVM model= new PostCategoryVM { Categories = _context.Categories.ToList() };
-            return View(model);
+            PostCategoryVM postCategory = new PostCategoryVM { Categories = _context.Categories.ToList() };
+            return View(postCategory);
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public IActionResult Create(PostCategoryVM postCategory)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(postCategory.Post);
+            }
+            if (!postCategory.Post.Photo.ContentType.Contains("image"))
+            {
+                return NotFound();
+            }
+            if (postCategory.Post.Photo.Length / 1024 > 3000)
+            {
+                return NotFound();
+            }
 
 
-            //if (ModelState["Photo"].ValidationState == ModelValidationState.Invalid)
-            //{
-            //    return NotFound();
-            //};
-            //if (!post.Photo.ContentType.Contains("image"))
-            //{
-            //    return NotFound();
-            //}
-            //if (post.Photo.Length / 1024 > 3000)
-            //{
-            //    return NotFound();
-            //}
+            string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
+            string environment = _env.WebRootPath;
+            string newSlider = Path.Combine(environment, "img", "blog", filename);
+            using (FileStream file = new FileStream(newSlider, FileMode.Create))
+            {
+                postCategory.Post.Photo.CopyTo(file);
+            }
+            postCategory.Post.Image = filename;            
+            postCategory.Post.Category = new Category
+            {
+                Name = postCategory.Category
+            };
 
+          
+            _context.Posts.Add(postCategory.Post);
+            _context.SaveChanges();
 
-            //string filename = Guid.NewGuid().ToString() + '-' + post.Photo.FileName;
-            //string environment = _env.WebRootPath;
-            //string newSlider = Path.Combine(environment, "img","blog", filename);
-            //using (FileStream file = new FileStream(newSlider, FileMode.Create))
-            //{
-            //    post.Photo.CopyTo(file);
-            //}
-            //post.Image = filename;
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(post);
-            //}
-            //_context.Posts.Add(post);
-            //_context.SaveChanges();
-
-
-
-            //return RedirectToAction(nameof(Index));
-
-            return Content(postCategory.Category);
+            return RedirectToAction(nameof(Index), postCategory);
+            
         }
+
+        public IActionResult Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            PostCategoryVM postCategory = new PostCategoryVM
+            {
+                Post = _context.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
+                Categories = _context.Categories.ToList()                
+            };
+            if (postCategory.Post == null)
+            {
+                return BadRequest();
+            }          
+
+            return View(postCategory);
+        }
+
+        //[HttpPost]
+        //[AutoValidateAntiforgeryToken]
+        //public IActionResult Update(int? id,PostCategoryVM postCategory)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    //if (id != postCategory.Post.Id)
+        //    //{
+        //    //    return NotFound();
+        //    //}
+
+        //    if (!postCategory.Post.Photo.ContentType.Contains("image"))
+        //    {
+        //        return NotFound();
+        //    }
+        //    if (postCategory.Post.Photo.Length / 1024 > 3000)
+        //    {
+        //        return NotFound();
+        //    }
+
+
+        //    string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
+        //    string environment = _env.WebRootPath;
+        //    string newSlider = Path.Combine(environment, "img", "blog", filename);
+        //    using (FileStream file = new FileStream(newSlider, FileMode.Create))
+        //    {
+        //        postCategory.Post.Photo.CopyTo(file);
+        //    }
+        //    postCategory.Post.Image = filename;
+        //    postCategory.Post.Category = new Category
+        //    {
+        //        Name = postCategory.Category
+        //    };
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(postCategory.Post);
+        //    }
+        //    _context.Update(postCategory.Post);
+        //    _context.SaveChanges();
+
+        //    return RedirectToAction(nameof(Index), postCategory);
+        //}
     }
 }

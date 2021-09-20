@@ -55,6 +55,16 @@
     <Compile Remove="Migrations\20210920130453_AddedEventTable.Designer.cs" />
     <Compile Remove="Migrations\20210920131847_AddedEventTable.cs" />
     <Compile Remove="Migrations\20210920131847_AddedEventTable.Designer.cs" />
+    <Compile Remove="Migrations\20210920133326_AddedEventTable.cs" />
+    <Compile Remove="Migrations\20210920133326_AddedEventTable.Designer.cs" />
+    <Compile Remove="Migrations\20210920213322_AddedEventTables.cs" />
+    <Compile Remove="Migrations\20210920213322_AddedEventTables.Designer.cs" />
+    <Compile Remove="Migrations\20210920214928_AddedEventTables.cs" />
+    <Compile Remove="Migrations\20210920214928_AddedEventTables.Designer.cs" />
+    <Compile Remove="Migrations\20210920221114_AddedEventTables.cs" />
+    <Compile Remove="Migrations\20210920221114_AddedEventTables.Designer.cs" />
+    <Compile Remove="Migrations\20210920221722_AddedEventTables.cs" />
+    <Compile Remove="Migrations\20210920221722_AddedEventTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

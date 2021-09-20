@@ -1,5 +1,6 @@
 ﻿using EduHome.Models.Base;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,9 @@ namespace EduHome.Models.Entity
     {
         [Required, StringLength(maximumLength: 100)]
         public string Title { get; set; }
-        [Required]
+        //[BindNever]
+        //public string Image { get; set; }
+        [BindNever]
         public string Image { get; set; }
         [Required, NotMapped]
         public IFormFile Photo { get; set; }

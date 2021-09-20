@@ -2,10 +2,17 @@
 
 namespace EduHome.Migrations
 {
-    public partial class AddedEventTable : Migration
+    public partial class AddedEventTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Image",
+                table: "Posts",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
             migrationBuilder.AddColumn<int>(
                 name: "EventId",
                 table: "PostMessages",
@@ -185,6 +192,14 @@ namespace EduHome.Migrations
             migrationBuilder.DropColumn(
                 name: "EventId",
                 table: "PostMessages");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Image",
+                table: "Posts",
+                type: "nvarchar(max)",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldNullable: true);
         }
     }
 }

@@ -35,9 +35,9 @@
                             <td>@item.Date</td>
                             <td>
                                 <ul class="d-flex list-unstyled">
-                                    <li><a class="btn btn-warning"><i class="fa fa-pencil"></i></a></li>
+                                    <li><a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-pencil"></i></a></li>
                                     <li><a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-info"></i></a></li>
-                                    <li><a asp-controller="Dashboard" asp-action="DeleteOrActive" asp-route-id="@item.Id" class="btn @(item.IsDeleted?"btn-success":"btn-danger")"><i class="@(item.IsDeleted?"fa fa-check-square":"fa fa-trash-o")"></i></a></li>
+                                    <li><a asp-action="DeleteOrActive" asp-route-id="@item.Id" class="btn @(item.IsDeleted?"btn-success":"btn-danger")"><i class="@(item.IsDeleted?"fa fa-check-square":"fa fa-trash-o")"></i></a></li>
                                 </ul>
                             </td>
                         </tr>
