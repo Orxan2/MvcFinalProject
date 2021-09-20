@@ -41,7 +41,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            if (post.IsDeleted == true)
+            if (post.IsDeleted)
                 post.IsDeleted = false;
             else
                 post.IsDeleted = true;
@@ -49,6 +49,22 @@ namespace EduHome.Areas.Admin.Controllers
             _context.SaveChanges();
             
             return RedirectToAction(nameof(Index),post);
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Post post = _context.Posts.Include(p => p.Category).Include(p=>p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id);
+            if (post == null)
+            {
+                return BadRequest();
+            }
+
+            return View(post);
         }
     }
 }
