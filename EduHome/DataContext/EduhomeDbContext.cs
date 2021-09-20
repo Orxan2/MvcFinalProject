@@ -28,7 +28,7 @@ namespace EduHome.DataContext
                 Property(p => p.Date).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
             modelBuilder.Entity<Post>().
-               Property(p => p.IsDeleted).HasDefaultValue("false");
+               Property(p => p.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<Category>(e => e.HasData(
                 new Category

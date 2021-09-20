@@ -43,6 +43,12 @@
     <Compile Remove="Migrations\20210919204449_addIsdeletedToPostTable.Designer.cs" />
     <Compile Remove="Migrations\20210919204723_addIsdeletedToPostTable.cs" />
     <Compile Remove="Migrations\20210919204723_addIsdeletedToPostTable.Designer.cs" />
+    <Compile Remove="Migrations\20210920061950_UpdateIsDeleted.cs" />
+    <Compile Remove="Migrations\20210920061950_UpdateIsDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20210920062210_UpdateIsDeleted.cs" />
+    <Compile Remove="Migrations\20210920062210_UpdateIsDeleted.Designer.cs" />
+    <Compile Remove="Migrations\20210920062858_UpdateIsDeleted.cs" />
+    <Compile Remove="Migrations\20210920062858_UpdateIsDeleted.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

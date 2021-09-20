@@ -48,7 +48,7 @@ namespace EduHome.Areas.Admin.Controllers
 
             _context.SaveChanges();
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),post);
         }
     }
 }
