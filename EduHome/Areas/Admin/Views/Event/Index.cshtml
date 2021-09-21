@@ -1,0 +1,51 @@
+﻿@model List<Event>
+@{
+    ViewData["Title"] = "Index";
+    int count = 0;
+}
+
+
+<div class="content sm-gutter">
+    <div class="page-title">
+        <h1>Blogs</h1>
+        <a asp-action="Create" class="btn btn-success text-light"><i class="fa fa-plus-circle"></i></a>
+    </div>
+
+    <div class="row">
+
+        <table class="table table-hover no-more-tables">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Author</th>
+                    <th>Event Title</th>
+                    <th>Event Text</th>
+                    <th>Time Interval</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @(count++);
+                <tr>
+                    <td>@count</td>
+                    <td>@item.ByWhom</td>
+                    <td>@item.Title</td>
+                    <td>@item.Details.Substring(0, 20)...</td>
+                    <td>@item.TimeInterval.Name</td>
+                    <td>@item.Address</td>
+                    <td>
+                        <ul class="d-flex list-unstyled">
+                            <li><a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning  @(item.IsDeleted?"disabled":"")"><i class="fa fa-pencil"></i></a></li>
+                            <li><a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary @(item.IsDeleted?"disabled":"")"><i class="fa fa-info"></i></a></li>
+                            <li><a asp-action="DeleteOrActive" asp-route-id="@item.Id" class="btn @(item.IsDeleted?"btn-success":"btn-danger")"><i class="@(item.IsDeleted?"fa fa-check-square":"fa fa-trash-o")"></i></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

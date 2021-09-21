@@ -19,7 +19,7 @@
                     <th>Author</th>
                     <th>Blog Title</th>
                     <th>Blog Text</th>
-                    <th>Created Date</th>
+                    <th>IsDeleted</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -32,7 +32,7 @@
                         <td>@item.ByWhom</td>
                         <td>@item.Title</td>
                         <td>@item.Details.Substring(0, 20)...</td>
-                        <td>@item.Date</td>
+                        <td>@item.IsDeleted</td>
                         <td>
                             <ul class="d-flex list-unstyled">
                                 <li><a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning  @(item.IsDeleted?"disabled":"")"><i class="fa fa-pencil"></i></a></li>
