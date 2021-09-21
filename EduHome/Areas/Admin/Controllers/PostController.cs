@@ -2,9 +2,7 @@
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,11 +13,11 @@ using System.Threading.Tasks;
 namespace EduHome.Areas.Admin.Controllers
 {
     [Area("admin")]
-    public class DashboardController : Controller
+    public class PostController : Controller
     {
         public EduhomeDbContext _context { get; }
         public IWebHostEnvironment _env { get; }
-        public DashboardController(EduhomeDbContext context, IWebHostEnvironment env)
+        public PostController(EduhomeDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _env = env;
@@ -31,7 +29,7 @@ namespace EduHome.Areas.Admin.Controllers
                 Posts = _context.Posts.Include(p => p.Category).ToList()
             };
             return View(postVM);
-        }                
+        }
         public IActionResult DeleteOrActive(int? id)
         {
             if (id == null)
@@ -39,7 +37,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Post post = _context.Posts.Include(p=>p.Category).FirstOrDefault(p=>p.Id == id);
+            Post post = _context.Posts.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return BadRequest();
@@ -51,8 +49,8 @@ namespace EduHome.Areas.Admin.Controllers
                 post.IsDeleted = true;
 
             _context.SaveChanges();
-            
-            return RedirectToAction(nameof(Index),post);
+
+            return RedirectToAction(nameof(Index), post);
         }
         public IActionResult Details(int? id)
         {
@@ -61,7 +59,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Post post = _context.Posts.Include(p => p.Category).Include(p=>p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id);
+            Post post = _context.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return BadRequest();
@@ -99,18 +97,18 @@ namespace EduHome.Areas.Admin.Controllers
             {
                 postCategory.Post.Photo.CopyTo(file);
             }
-            postCategory.Post.Image = filename;            
+            postCategory.Post.Image = filename;
             postCategory.Post.Category = new Category
             {
                 Name = postCategory.Category
             };
 
-          
+
             _context.Posts.Add(postCategory.Post);
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index), postCategory);
-            
+
         }
 
         public IActionResult Update(int? id)
@@ -123,7 +121,7 @@ namespace EduHome.Areas.Admin.Controllers
             PostCategoryVM postCategory = new PostCategoryVM
             {
                 Post = _context.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
-                Categories = _context.Categories.ToList()                
+                Categories = _context.Categories.ToList()
             };
             if (postCategory.Post == null)
             {
@@ -131,13 +129,13 @@ namespace EduHome.Areas.Admin.Controllers
             }
 
             string environment = _env.WebRootPath;
-            string folderPath = Path.Combine(environment, "img","blog", postCategory.Post.Image);
+            string folderPath = Path.Combine(environment, "img", "blog", postCategory.Post.Image);
             FileInfo file = new FileInfo(folderPath);
             if (System.IO.File.Exists(folderPath))
             {
                 file.Delete();
             };
-           
+
 
             return View(postCategory);
         }
@@ -170,7 +168,7 @@ namespace EduHome.Areas.Admin.Controllers
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "img", "blog", filename);
             using (FileStream file = new FileStream(newSlider, FileMode.Create))
-            {               
+            {
                 postCategory.Post.Photo.CopyTo(file);
             }
             postCategory.Post.Image = filename;

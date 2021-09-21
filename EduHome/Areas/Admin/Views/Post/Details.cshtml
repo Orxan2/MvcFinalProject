@@ -1,0 +1,64 @@
+﻿@model Post
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="blog-details-area pt-150 pb-140">
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Image :</h3>
+            </div>
+            <div class="col-md-8">
+                <img src="~/img/blog/@Model.Image" style="width:100%;" alt="blog-details">
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Title :</h3>
+            </div>
+            <div class="col-md-8">
+                <h3>@Model.Title</h3>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Author :</h3>
+            </div>
+            <div class="col-md-8">
+                <h3>@Model.ByWhom</h3>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Created date :</h3>
+            </div>
+            <div class="col-md-8">
+                <h3>@Model.Date</h3>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Message Count</h3>
+            </div>
+            <div class="col-md-8">
+                <h3><i class="fa fa-comments-o"></i> @Model.PostMessages.Count()</h3>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Text :</h3>
+            </div>
+            <div class="col-md-8">
+                @Html.Raw(Model.Details.ToString())
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <h3 class="fw-bold text-warning">Category :</h3>
+            </div>
+            <div class="col-md-8">
+                <h3> @Html.Raw(Model.Category.Name.ToString())</h3>
+            </div>
+        </div>
+    </div>
+</div>       

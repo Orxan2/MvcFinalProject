@@ -319,6 +319,12 @@ textarea {
 .mb-150 { margin-bottom: 150px }
 .mb-220 { margin-bottom: 220px }
 .mb-350 { margin-bottom: 350px }
+.text-right{
+text-align:right;
+}
+.text-left {
+    text-align: left;
+}
 /*************************
     Margin left
 *************************/
