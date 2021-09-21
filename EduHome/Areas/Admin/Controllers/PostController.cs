@@ -91,7 +91,6 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-
             string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
             string environment = _env.WebRootPath;
             string newSlider = Path.Combine(environment, "img", "blog", filename);
@@ -100,11 +99,7 @@ namespace EduHome.Areas.Admin.Controllers
                 postCategory.Post.Photo.CopyTo(file);
             }
             postCategory.Post.Image = filename;
-            postCategory.Post.Category = new Category
-            {
-                Name = postCategory.Category
-            };
-
+            postCategory.Post.Category = _context.Categories.FirstOrDefault(c=>c.Name == postCategory.Category);
 
             _context.Posts.Add(postCategory.Post);
             _context.SaveChanges();
