@@ -11,8 +11,8 @@ namespace EduHome.Models.Entity
     {
         [Required, StringLength(maximumLength: 50)]
         public string Name { get; set; }
-        public ICollection<Post> Posts { get; set; }
-        public ICollection<Event> Events { get; set; }
+        public List<Post> Posts { get; set; }
+        public List<Event> Events { get; set; }
         public List<CourseThemeCourse> CourseThemeCourses { get; set; }
     }
 }

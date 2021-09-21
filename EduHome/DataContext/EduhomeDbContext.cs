@@ -23,6 +23,9 @@ namespace EduHome.DataContext
         public DbSet<Event> Events { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<TimeInterval> TimeIntervals { get; set; }
+        public DbSet<Footer> Footer { get; set; }
+        public DbSet<SocialLink> SocialLinks { get; set; }
+        public DbSet<Phone> Phones { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -247,6 +250,67 @@ namespace EduHome.DataContext
                   Id = 6,
                   EventId = 4,
                   SpeakerId = 2
+              })
+          );
+            modelBuilder.Entity<Phone>(e => e.HasData(
+              new Phone
+              {
+                  Id = 1,
+                 PhoneNumber = "+880 548 986 898 87",
+                 FooterId = 1
+              },
+              new Phone
+              {
+                  Id = 2,
+                  PhoneNumber = "+880 659 785 658 98",
+                  FooterId = 1
+              })
+          );
+            modelBuilder.Entity<SocialLink>(e => e.HasData(
+             new SocialLink
+             {
+                 Id = 1,
+                 Name = "facebook",
+                 Icon = "zmdi zmdi-facebook",
+                 Link = "facebook.com",
+                 FooterId = 1
+             },
+            new SocialLink
+            {
+                Id = 2,
+                Name = "pinterest",
+                Icon = "zmdi zmdi-pinterest",
+                Link = "pinterest.com",
+                 FooterId = 1
+            },
+            new SocialLink
+            {
+                Id = 3,
+                Name = "vimeo",
+                Icon = "zmdi zmdi-vimeo",
+                Link = "vimeo.com",
+                 FooterId = 1
+            },
+            new SocialLink
+            {
+                Id = 4,
+                Name = "twitter",
+                Icon = "zmdi zmdi-twitter",
+                Link = "twitter.com",
+                FooterId = 1
+            })
+         );
+
+            modelBuilder.Entity<Footer>(e => e.HasData(
+              new Footer
+              {
+                  Id = 1,
+                  Address = "City, Roadno 785 New York",
+                  Copyright = "<p>Copyright © <a href='#' target='_blank'>HasTech</a> 2017. All Right Reserved By Hastech.</p>",
+                  Email = "info@eduhome.com",
+                  Logo = "footer-logo.png",
+                  Slogan = "I must explain to you how all this mistaken idea of denoung pleure and praising pain was born and give you a coete account of the system.",
+                  website = "www.eduhome.com"
               })
           );
         }

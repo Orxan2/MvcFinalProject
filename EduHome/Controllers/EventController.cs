@@ -86,7 +86,6 @@ namespace EduHome.Controllers
             _db.Add(postMessage);
             _db.SaveChanges();
 
-
             return View(eventDetailVM);
         }
     }
