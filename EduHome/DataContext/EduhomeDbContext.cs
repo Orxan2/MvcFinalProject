@@ -26,6 +26,7 @@ namespace EduHome.DataContext
         public DbSet<Footer> Footer { get; set; }
         public DbSet<SocialLink> SocialLinks { get; set; }
         public DbSet<Phone> Phones { get; set; }
+        public DbSet<Header> Header { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -313,6 +314,16 @@ namespace EduHome.DataContext
                   website = "www.eduhome.com"
               })
           );
+
+            modelBuilder.Entity<Header>(e => e.HasData(
+             new Header
+             {
+                 Id = 1,
+                 Logo = "logo2.png",
+                 Text = "HAVE ANY QUESTION ?",
+                 Phone = "+880 5698 598 6587"
+             })
+         );
         }
     }
 }
