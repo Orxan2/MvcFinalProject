@@ -66,25 +66,25 @@
                                 <nav>
                                     <ul>
                                         <li>
-                                            <a href="index-2.html">Home</a>                                           
+                                            <a asp-controller="Home" asp-action="Index">Home</a>                                           
                                         </li>
                                         <li><a href="about.html">About</a></li>
                                         <li>
                                             <a href="course.html">courses</a>                                           
                                         </li>
                                         <li>
-                                            <a href="event.html">event</a>
+                                            <a asp-controller="Event" asp-action="Index">event</a>
                                             <ul>
-                                                <li><a href="event.html">event</a></li>
+                                                <li><a asp-controller="Event" asp-action="Index">Event</a></li>
                                                 <li><a href="event-left-side-bar.html">event left sidebar</a></li>
-                                                <li><a href="event-right-side-bar.html">event right sidebar</a></li>                                              
+                                                <li><a href="event-right-side-bar.html">event right sidebar</a></li>
                                             </ul>
                                         </li>
                                         <li class="hidden-sm">
                                             <a href="teacher.html">teacher</a>                                         
                                         </li>
                                         <li>
-                                            <a href="blog.html">blog</a>
+                                            <a asp-controller="Post" asp-action="Index">blog</a>
                                             <ul>
                                                 <li><a asp-controller="Post" asp-action="Index">blog</a></li>
                                                 <li><a href="blog-left-side-bar.html">blog left sidebar</a></li>

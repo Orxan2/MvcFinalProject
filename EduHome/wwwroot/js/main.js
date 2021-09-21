@@ -27,23 +27,23 @@
    
 
     /*------------------------------------
-     Send Messages Partial View     
-    --------------------------------------*/
-    $('#send').on('click', function() {
-        var name = $("#name").val();
-        var email = $("#email").val();
-        var subject = $("#subject").val();
-        var message = $("#message").val();
-        $.ajax({
-            url: `/post/SendMessages?name=${name}&email=${email}&subject=${subject}&message=${message}`,
-            type: "Get",
-            success: function (response) {
-                console.log(response);
-                $('#addHere').append(response);
-            }
-        });
+    // Send Messages Partial View     
+    //--------------------------------------*/
+    //$('#send').on('click', function() {
+    //    var name = $("#name").val();
+    //    var email = $("#email").val();
+    //    var subject = $("#subject").val();
+    //    var message = $("#message").val();
+    //    $.ajax({
+    //        url: `/post/SendMessages?name=${name}&email=${email}&subject=${subject}&message=${message}`,
+    //        type: "Get",
+    //        success: function (response) {
+    //            console.log(response);
+    //            $('#addHere').append(response);
+    //        }
+    //    });
 
-    });
+    //});
 
 /*------------------------------------
 	Owl Carousel

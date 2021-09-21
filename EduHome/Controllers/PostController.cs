@@ -19,7 +19,8 @@ namespace EduHome.Controllers
         public IActionResult Index(int id)
         {
             ViewBag.Pagination = id;
-            int count = Convert.ToInt32(Math.Ceiling(_db.Posts.Count() / 9.0));        
+            int count = Convert.ToInt32(Math.Ceiling(_db.Posts.Include(p => p.Category).Include(p => p.PostMessages).
+                Count(p=>p.IsDeleted == false) / 9.0));        
             return View(count);
         }
 
@@ -30,7 +31,7 @@ namespace EduHome.Controllers
                 return NotFound();
             }
 
-            Post post = _db.Posts.Include(p => p.Category).FirstOrDefault(b => b.Id == id);
+            Post post = _db.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(b => b.Id == id);
 
             if (post == null)
             {
@@ -40,25 +41,31 @@ namespace EduHome.Controllers
             PostDetailVM postDetailsVM = new PostDetailVM
             {
                 Post = post,
-                Categories = _db.Categories.ToList(),
-                LatestPosts = _db.Posts.OrderByDescending(p => p.Id).Take(3).ToList(),
-                PostMessages = _db.PostMessages.Include(pm=>pm.Post).Where(pm=>pm.PostId == id).ToList()
+                Categories = _db.Categories.Include(c=>c.Events).Include(c=>c.Posts).ToList(),
+                LatestPosts = _db.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).OrderByDescending(p => p.Id).Take(3).ToList(),
+                PostMessages = _db.PostMessages.Include(pm=>pm.Event).Include(pm=>pm.Post).Where(pm=>pm.PostId == id).ToList()
             };
 
             return View(postDetailsVM);
         }
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult PostDetail(int? id,PostMessage postMessage)
+        public IActionResult PostDetail(int? id, PostMessage postMessage)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Post post = _db.Posts.Include(p => p.Category).FirstOrDefault(b => b.Id == id);
+            Post post = _db.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).
+                FirstOrDefault(b => b.Id == id);
 
             if (post == null)
+            {
+                return BadRequest();
+            }
+            if (post.Id != id)
             {
                 return BadRequest();
             }
@@ -66,9 +73,9 @@ namespace EduHome.Controllers
             PostDetailVM postDetailsVM = new PostDetailVM
             {
                 Post = post,
-                Categories = _db.Categories.ToList(),
-                LatestPosts = _db.Posts.Include(p => p.Category).OrderByDescending(p => p.Id).Take(3).ToList(),
-                PostMessages = _db.PostMessages.Include(pm => pm.Post).Where(pm => pm.PostId == id).ToList(),
+                Categories = _db.Categories.Include(c => c.Events).Include(c => c.Posts).ToList(),
+                LatestPosts = _db.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).OrderByDescending(p => p.Id).Take(3).ToList(),
+                PostMessages = _db.PostMessages.Include(pm => pm.Event).Include(pm => pm.Post).Where(pm => pm.PostId == id).ToList(),
                 PostMessage = postMessage
             };
 
@@ -76,11 +83,12 @@ namespace EduHome.Controllers
             {
                 return View(postDetailsVM);
             }
+
             postDetailsVM.PostMessages.Add(postMessage);
             _db.Add(postMessage);
             _db.SaveChanges();
 
-           
+
             return View(postDetailsVM);
         }
 

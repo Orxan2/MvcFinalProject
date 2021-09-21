@@ -19,6 +19,7 @@ namespace EduHome.DataContext
         public DbSet<CourseTheme> CourseThemes { get; set; }
         public DbSet<CourseThemeCourse> CourseThemeCourses { get; set; }
         public DbSet<PostMessage> PostMessages { get; set; }
+        public DbSet<EventSpeaker> EventSpeakers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<TimeInterval> TimeIntervals { get; set; }
@@ -126,14 +127,14 @@ namespace EduHome.DataContext
                    Id = 1,
                   Fullname = "Anthony Smith" ,
                   Professional = "CEO, Hastech",
-                  Image = "speaker1"
+                  Image = "speaker1.jpg"
                },
                new Speaker
                {
                    Id = 2,
                    Fullname = "Lucy Rose",
                    Professional = "Developer, STD",
-                   Image = "speaker2"
+                   Image = "speaker2.jpg"
                })
            );
 
@@ -203,12 +204,50 @@ namespace EduHome.DataContext
                   "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
                  CategoryId = 3,
-                 Image = "event4.jpg",
+                 Image = "event5.jpg",
                  TimeIntervalId = 2,
                  Address = "Cristal Centre, 254 New Yourk"
 
              }
               )
+          );
+            modelBuilder.Entity<EventSpeaker>(e => e.HasData(
+              new EventSpeaker
+              {
+                  Id = 1,
+                  EventId = 1,
+                  SpeakerId = 1
+              },
+              new EventSpeaker
+              {
+                  Id = 2,
+                  EventId = 1,
+                  SpeakerId = 2
+              },
+              new EventSpeaker
+              {
+                  Id = 3,
+                  EventId = 2,
+                  SpeakerId = 1
+              },
+              new EventSpeaker
+              {
+                  Id = 4,
+                  EventId = 3,
+                  SpeakerId = 2
+              },
+            new EventSpeaker
+            {
+                Id = 5,
+                EventId = 4,
+                SpeakerId = 1
+            },
+              new EventSpeaker
+              {
+                  Id = 6,
+                  EventId = 4,
+                  SpeakerId = 2
+              })
           );
         }
     }

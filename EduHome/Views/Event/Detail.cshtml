@@ -1,0 +1,84 @@
+﻿@model EventDetailVM
+@{
+    ViewData["Title"] = "BlogEdit";
+}
+<!-- Event Details Start -->
+<div class="event-details-area blog-area pt-150 pb-140">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="event-details">
+                    <div class="event-details-img">
+                        <img src="~/img/event/@Model.Event.Image" style="width:770px; height:360px;" alt="event-details">
+                        <div class="event-date">
+                            <h3>20 <span>jun</span></h3>
+                        </div>
+                    </div>
+                    <div class="event-details-content">
+                        <h2>@Model.Event.Title</h2>
+                        <ul>
+                            <li><span>time : </span>@Model.Event.TimeInterval.Name</li>
+                            <li><span>venue : </span>@Model.Event.Address</li>
+                        </ul>
+                        @Html.Raw(Model.Event.Details.ToString())
+                        <div class="speakers-area fix">
+                            <h4>speakers</h4>
+                            @foreach (var eventSpeaker in Model.Event.EventSpeakers)
+                            {
+                                <div class="single-speaker">
+                                    <div class="speaker-img">
+                                        <img src="~/img/event/@eventSpeaker.Speaker.Image" alt="speaker">
+                                    </div>
+                                    <div class="speaker-name">
+                                        <h5>@eventSpeaker.Speaker.Fullname</h5>
+                                        <p>@eventSpeaker.Speaker.Professional</p>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="reply-area">
+                        <h3>LEAVE A REPLY</h3>
+                        <ul class="list-group border-0 my-4">
+                            @foreach (var message in Model.PostMessages)
+                            {
+                                <li class="list-group-item list-group-item-info border-0">
+                                    <h1>@message.Email</h1>
+                                    <p>@message.Message</p>
+                                </li>
+                            }
+                        </ul>
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label asp-for="PostMessage.Name">Name</label>
+                                    <input asp-for="PostMessage.Name" class="form-control" />
+                                    <span asp-validation-for="PostMessage.Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="PostMessage.Email">Email</label>
+                                    <input asp-for="PostMessage.Email" class="form-control" />
+                                    <span asp-validation-for="PostMessage.Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="PostMessage.Subject">Subject</label>
+                                    <input asp-for="PostMessage.Subject" class="form-control" />
+                                    <span asp-validation-for="PostMessage.Subject" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="PostMessage.Message">Message</label>
+                                    <textarea asp-for="PostMessage.Message" class="form-control"></textarea>
+                                    <span asp-validation-for="PostMessage.Message" class="text-danger py-1"></span>
+                                </div>
+                            </div>
+                            <button type="submit" class="form-control">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>      
+            @await Component.InvokeAsync("LatestPosts")
+        </div>
+    </div>
+</div>
+<!-- Event Details End -->

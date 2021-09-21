@@ -79,7 +79,7 @@ namespace EduHome.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventSpeaker",
+                name: "EventSpeakers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -89,15 +89,15 @@ namespace EduHome.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventSpeaker", x => x.Id);
+                    table.PrimaryKey("PK_EventSpeakers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventSpeaker_Events_EventId",
+                        name: "FK_EventSpeakers_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EventSpeaker_Speakers_SpeakerId",
+                        name: "FK_EventSpeakers_Speakers_SpeakerId",
                         column: x => x.SpeakerId,
                         principalTable: "Speakers",
                         principalColumn: "Id",
@@ -109,8 +109,8 @@ namespace EduHome.Migrations
                 columns: new[] { "Id", "Fullname", "Image", "Professional" },
                 values: new object[,]
                 {
-                    { 1, "Anthony Smith", "speaker1", "CEO, Hastech" },
-                    { 2, "Lucy Rose", "speaker2", "Developer, STD" }
+                    { 1, "Anthony Smith", "speaker1.jpg", "CEO, Hastech" },
+                    { 2, "Lucy Rose", "speaker2.jpg", "Developer, STD" }
                 });
 
             migrationBuilder.InsertData(
@@ -130,7 +130,20 @@ namespace EduHome.Migrations
                     { 1, "Cristal Centre, 254 New Yourk", "Emin", 1, "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p><p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>", "event1.jpg", false, 1, "I'm Smartest man" },
                     { 3, "Cristal Centre, 254 New Yourk", "Elvin", 1, "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p><p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>", "event3.jpg", false, 1, "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA" },
                     { 2, "Cristal Centre, 254 New Yourk", "Cavid", 1, "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p><p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>", "event2.jpg", false, 2, "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA" },
-                    { 4, "Cristal Centre, 254 New Yourk", "Serxan", 3, "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p><p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>", "event4.jpg", false, 2, "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA" }
+                    { 4, "Cristal Centre, 254 New Yourk", "Serxan", 3, "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p><p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>", "event5.jpg", false, 2, "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EventSpeakers",
+                columns: new[] { "Id", "EventId", "SpeakerId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 1, 2 },
+                    { 4, 3, 2 },
+                    { 3, 2, 1 },
+                    { 5, 4, 1 },
+                    { 6, 4, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -149,13 +162,13 @@ namespace EduHome.Migrations
                 column: "TimeIntervalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventSpeaker_EventId",
-                table: "EventSpeaker",
+                name: "IX_EventSpeakers_EventId",
+                table: "EventSpeakers",
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventSpeaker_SpeakerId",
-                table: "EventSpeaker",
+                name: "IX_EventSpeakers_SpeakerId",
+                table: "EventSpeakers",
                 column: "SpeakerId");
 
             migrationBuilder.AddForeignKey(
@@ -174,7 +187,7 @@ namespace EduHome.Migrations
                 table: "PostMessages");
 
             migrationBuilder.DropTable(
-                name: "EventSpeaker");
+                name: "EventSpeakers");
 
             migrationBuilder.DropTable(
                 name: "Events");

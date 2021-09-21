@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    [Migration("20210920223547_AddedEventTables")]
+    [Migration("20210921070842_AddedEventTables")]
     partial class AddedEventTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,7 +225,7 @@ namespace EduHome.Migrations
                             ByWhom = "Serxan",
                             CategoryId = 3,
                             Details = "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam volutatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui </p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p><p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p><p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                            Image = "event4.jpg",
+                            Image = "event5.jpg",
                             IsDeleted = false,
                             TimeIntervalId = 2,
                             Title = "I MUST EXPLAIN TO YOU HOW ALL THIS A MISTAKEN IDEA"
@@ -251,7 +251,45 @@ namespace EduHome.Migrations
 
                     b.HasIndex("SpeakerId");
 
-                    b.ToTable("EventSpeaker");
+                    b.ToTable("EventSpeakers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EventId = 1,
+                            SpeakerId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EventId = 1,
+                            SpeakerId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EventId = 2,
+                            SpeakerId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EventId = 3,
+                            SpeakerId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EventId = 4,
+                            SpeakerId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            EventId = 4,
+                            SpeakerId = 2
+                        });
                 });
 
             modelBuilder.Entity("EduHome.Models.Entity.Post", b =>
@@ -409,14 +447,14 @@ namespace EduHome.Migrations
                         {
                             Id = 1,
                             Fullname = "Anthony Smith",
-                            Image = "speaker1",
+                            Image = "speaker1.jpg",
                             Professional = "CEO, Hastech"
                         },
                         new
                         {
                             Id = 2,
                             Fullname = "Lucy Rose",
-                            Image = "speaker2",
+                            Image = "speaker2.jpg",
                             Professional = "Developer, STD"
                         });
                 });
