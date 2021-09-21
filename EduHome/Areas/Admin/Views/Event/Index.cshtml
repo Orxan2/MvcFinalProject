@@ -7,7 +7,7 @@
 
 <div class="content sm-gutter">
     <div class="page-title">
-        <h1>Blogs</h1>
+        <h1>Events</h1>
         <a asp-action="Create" class="btn btn-success text-light"><i class="fa fa-plus-circle"></i></a>
     </div>
 
@@ -33,7 +33,7 @@
                     <td>@count</td>
                     <td>@item.ByWhom</td>
                     <td>@item.Title</td>
-                    <td>@item.Details.Substring(0, 20)...</td>
+                    <td>@(item.Details.Length > 20 ? item.Details.Substring(0, 20) : item.Details)</td>
                     <td>@item.TimeInterval.Name</td>
                     <td>@item.Address</td>
                     <td>

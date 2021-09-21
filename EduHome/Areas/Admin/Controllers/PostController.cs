@@ -72,6 +72,8 @@ namespace EduHome.Areas.Admin.Controllers
             PostCategoryVM postCategory = new PostCategoryVM { Categories = _context.Categories.ToList() };
             return View(postCategory);
         }
+
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public IActionResult Create(PostCategoryVM postCategory)

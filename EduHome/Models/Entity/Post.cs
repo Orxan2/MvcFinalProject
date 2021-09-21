@@ -14,8 +14,6 @@ namespace EduHome.Models.Entity
     {
         [Required, StringLength(maximumLength: 100)]
         public string Title { get; set; }
-        //[BindNever]
-        //public string Image { get; set; }
         [BindNever]
         public string Image { get; set; }
         [Required, NotMapped]

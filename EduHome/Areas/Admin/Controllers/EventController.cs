@@ -1,12 +1,14 @@
 ﻿using EduHome.DataContext;
 using EduHome.Models.Entity;
+using EduHome.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EduHome.Areas.Admin.Controllers
 {
@@ -14,9 +16,11 @@ namespace EduHome.Areas.Admin.Controllers
     public class EventController : Controller
     {
         public EduhomeDbContext _context { get; }
-        public EventController(EduhomeDbContext context)
+        public IWebHostEnvironment _env { get; }
+        public EventController(EduhomeDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: EventController
@@ -36,34 +40,72 @@ namespace EduHome.Areas.Admin.Controllers
             }
 
             Event @event = _context.Events.Include(e => e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
-                Include(e => e.EventSpeakers).ThenInclude(es=>es.Speaker).Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id);
+                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id);
+
             if (@event == null)
             {
                 return BadRequest();
             }
 
-            return View(@event);            
+            return View(@event);
         }
 
         // GET: EventController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
-            return View();
+            EventCategoryVM eventCategory = new EventCategoryVM
+            {
+                Categories = _context.Categories.ToList(),
+                TimeIntervals = _context.TimeIntervals.ToList()
+            };
+            return View(eventCategory);
         }
 
         // POST: EventController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Create(EventCategoryVM eventCategory)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(eventCategory.Event);
             }
-            catch
+            if (!eventCategory.Event.Photo.ContentType.Contains("image"))
             {
-                return View();
+                return NotFound();
             }
+            if (eventCategory.Event.Photo.Length / 1024 > 3000)
+            {
+                return NotFound();
+            }
+
+
+            string filename = Guid.NewGuid().ToString() + '-' + eventCategory.Event.Photo.FileName;
+            string environment = _env.WebRootPath;
+            string newSlider = Path.Combine(environment, "img", "event", filename);
+            using (FileStream file = new FileStream(newSlider, FileMode.Create))
+            {
+                eventCategory.Event.Photo.CopyTo(file);
+            }
+            eventCategory.Event.Image = filename;
+            eventCategory.Event.Category = _context.Categories.FirstOrDefault(c=>c.Name == eventCategory.Category);
+            eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t=>t.Name == eventCategory.TimeInterval);
+            //eventCategory.Event.TimeInterval.Name = eventCategory.TimeInterval;
+
+            //eventCategory.Event.Category = new Category
+            //{
+            //    Name = eventCategory.Category
+            //};
+            //eventCategory.Event.TimeInterval = new TimeInterval
+            //{
+            //    Name = eventCategory.TimeInterval
+            //};
+
+            _context.Events.Add(eventCategory.Event);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index), eventCategory);
+
         }
 
         // GET: EventController/Edit/5
