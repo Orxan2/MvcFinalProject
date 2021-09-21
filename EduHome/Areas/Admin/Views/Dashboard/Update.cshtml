@@ -17,6 +17,7 @@
             <div class="grid-body no-border">
                 <form enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" asp-for="Post.Id" />
                     <div class="mb-3">
                         <label asp-for="Post.Title">Title</label>
                         <input asp-for="Post.Title" class="form-control" />
