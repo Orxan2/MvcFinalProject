@@ -1,7 +1,12 @@
 ﻿@model List<Event>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Event";
 }
+
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner")
+<!-- Banner Area End -->
+
 <!-- Event Start -->
 <div class="event-area three text-left pt-150 pb-150">
     <div class="container">

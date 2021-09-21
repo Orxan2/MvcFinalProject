@@ -1,7 +1,12 @@
 ﻿@model EventDetailVM
 @{
-    ViewData["Title"] = "BlogEdit";
+    ViewData["Title"] = "EVENT / DETAILS";
 }
+
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner")
+<!-- Banner Area End -->
+
 <!-- Event Details Start -->
 <div class="event-details-area blog-area pt-150 pb-140">
     <div class="container">
@@ -76,7 +81,7 @@
                         </form>
                     </div>
                 </div>
-            </div>      
+            </div>
             @await Component.InvokeAsync("LatestPosts")
         </div>
     </div>

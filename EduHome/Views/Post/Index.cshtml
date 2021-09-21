@@ -1,7 +1,11 @@
 ﻿@model int
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "BLOG";
 }
+
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner")
+<!-- Banner Area End -->
 
 <!-- Blog Start -->
 <div class="blog-area pt-150 pb-150">

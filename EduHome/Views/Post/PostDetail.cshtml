@@ -1,7 +1,11 @@
 ﻿@model PostDetailVM
 @{
-    ViewData["Title"] = "BlogEdit";
+    ViewData["Title"] = "BLOG DETAILS";
 }
+
+<!-- Banner Area Start -->
+@await Component.InvokeAsync("Banner")
+<!-- Banner Area End -->
 
 <!-- Blog Start -->
 <div class="blog-details-area pt-150 pb-140">
@@ -16,16 +20,16 @@
                         <h2>@Model.Post.Title</h2>
                         <h6>@Model.Post.ByWhom  /  @Model.Post.Date  /  <i class="fa fa-comments-o"></i> @Model.PostMessages.Count()</h6>
                         @Html.Raw(Model.Post.Details.ToString())
-                    </div>          
+                    </div>
                     <div class="reply-area">
                         <h3>LEAVE A REPLY</h3>
                         <ul class="list-group border-0 my-4">
                             @foreach (var message in Model.PostMessages)
                             {
-                            <li class="list-group-item list-group-item-info border-0">
-                                <h1>@message.Email</h1>
-                                <p>@message.Message</p>
-                            </li>
+                                <li class="list-group-item list-group-item-info border-0">
+                                    <h1>@message.Email</h1>
+                                    <p>@message.Message</p>
+                                </li>
                             }
                         </ul>
                         <form method="post">
@@ -57,7 +61,7 @@
 
                 </div>
             </div>
-            @await Component.InvokeAsync("LatestPosts")           
+            @await Component.InvokeAsync("LatestPosts")
         </div>
     </div>
 </div>
