@@ -75,6 +75,8 @@
     <Compile Remove="Migrations\20210921084355_AddedFooterTables.Designer.cs" />
     <Compile Remove="Migrations\20210921084849_AddedFooterTables.cs" />
     <Compile Remove="Migrations\20210921084849_AddedFooterTables.Designer.cs" />
+    <Compile Remove="Migrations\20210921132216_UpdatedEventTable.cs" />
+    <Compile Remove="Migrations\20210921132216_UpdatedEventTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

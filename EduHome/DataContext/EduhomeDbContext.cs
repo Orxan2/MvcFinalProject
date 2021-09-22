@@ -27,7 +27,8 @@ namespace EduHome.DataContext
         public DbSet<SocialLink> SocialLinks { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Header> Header { get; set; }
-
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Contact> Contact { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -314,7 +315,12 @@ namespace EduHome.DataContext
                   website = "www.eduhome.com"
               })
           );
-
+            modelBuilder.Entity<Contact>(e => e.HasData(
+     new Contact
+     {
+         Id = 1
+     })
+ );
             modelBuilder.Entity<Header>(e => e.HasData(
              new Header
              {
@@ -324,6 +330,25 @@ namespace EduHome.DataContext
                  Phone = "+880 5698 598 6587"
              })
          );
+            modelBuilder.Entity<Address>(e => e.HasData(
+          new Address
+          {
+              Id = 1,
+             City = "New Yourk City",
+             Street = "135, First Lane, City Street",
+             Image = "contact1.png",
+             ContactId = 1
+          },
+          new Address
+          {
+              Id = 2,
+              City = "Philadelphia",
+              Street = "135, First Lane, City Street",
+              Image = "contact2.png",
+              ContactId = 1
+          })
+      );
+        
 
         }
     }

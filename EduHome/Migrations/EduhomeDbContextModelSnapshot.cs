@@ -19,6 +19,54 @@ namespace EduHome.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("EduHome.Models.Entity.Address", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<int?>("ContactId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "New Yourk City",
+                            ContactId = 1,
+                            Image = "contact1.png",
+                            Street = "135, First Lane, City Street"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Philadelphia",
+                            ContactId = 1,
+                            Image = "contact2.png",
+                            Street = "135, First Lane, City Street"
+                        });
+                });
+
             modelBuilder.Entity("EduHome.Models.Entity.Category", b =>
                 {
                     b.Property<int?>("Id")
@@ -65,6 +113,24 @@ namespace EduHome.Migrations
                         {
                             Id = 6,
                             Name = "PHP"
+                        });
+                });
+
+            modelBuilder.Entity("EduHome.Models.Entity.Contact", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contact");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
                         });
                 });
 
@@ -486,6 +552,9 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ContactId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -512,6 +581,8 @@ namespace EduHome.Migrations
                         .HasMaxLength(25);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
 
                     b.HasIndex("EventId");
 
@@ -649,6 +720,13 @@ namespace EduHome.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EduHome.Models.Entity.Address", b =>
+                {
+                    b.HasOne("EduHome.Models.Entity.Contact", "Contact")
+                        .WithMany("Addresses")
+                        .HasForeignKey("ContactId");
+                });
+
             modelBuilder.Entity("EduHome.Models.Entity.CourseThemeCourse", b =>
                 {
                     b.HasOne("EduHome.Models.Entity.Category", "Category")
@@ -704,6 +782,10 @@ namespace EduHome.Migrations
 
             modelBuilder.Entity("EduHome.Models.Entity.PostMessage", b =>
                 {
+                    b.HasOne("EduHome.Models.Entity.Contact", "Contact")
+                        .WithMany("PostMessages")
+                        .HasForeignKey("ContactId");
+
                     b.HasOne("EduHome.Models.Entity.Event", "Event")
                         .WithMany("PostMessages")
                         .HasForeignKey("EventId");

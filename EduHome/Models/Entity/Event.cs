@@ -20,6 +20,7 @@ namespace EduHome.Models.Entity
         public IFormFile Photo { get; set; }
         [Required]
         public string ByWhom { get; set; }
+        [Required]
         public string Address { get; set; }
         [DataType(dataType: DataType.Text)]
         public string Details { get; set; }

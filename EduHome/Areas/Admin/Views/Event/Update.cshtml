@@ -1,0 +1,71 @@
+﻿@model EventCategoryVM
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+            <div class="grid-title no-border">
+                <h4>Input <span class="semi-bold">Helpers</span></h4>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="#grid-config" data-toggle="modal" class="config"></a>
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="grid-body no-border">
+                <form enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" asp-for="Event.Id" />
+                    <div class="mb-3">
+                        <label asp-for="Event.Title">Title</label>
+                        <input asp-for="Event.Title" class="form-control" />
+                        <span asp-validation-for="Event.Title"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Event.Details">Details</label>
+                        <input asp-for="Event.Details" class="form-control" />
+                        <span asp-validation-for="Event.Details"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Event.Address">Address</label>
+                        <input asp-for="Event.Address" class="form-control" />
+                        <span asp-validation-for="Event.Address"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Event.ByWhom">Author</label>
+                        <input asp-for="Event.ByWhom" class="form-control" />
+                        <span asp-validation-for="Event.ByWhom"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="TimeInterval">TimeInterval</label>
+                        <select asp-for="TimeInterval" class="form-control">
+                            @foreach (TimeInterval item in Model.TimeIntervals)
+                            {
+                                <option>@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Event.Photo">Image</label>
+                        <img src="~/img/event/@Model.Event.Image" width="300" />
+                        <input asp-for="Event.Photo" class="form-control" accept="image/*" />
+                        <span asp-validation-for="Event.Photo"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Category">Category</label>
+                        <select asp-for="Category" class="form-control">
+                            @foreach (Category item in Model.Categories)
+                            {
+                                <option>@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" asp-route-image="@Model.Event.Image">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

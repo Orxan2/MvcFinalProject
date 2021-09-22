@@ -2,7 +2,9 @@
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -118,21 +120,12 @@ namespace EduHome.Areas.Admin.Controllers
             PostCategoryVM postCategory = new PostCategoryVM
             {
                 Post = _context.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
-                Categories = _context.Categories.ToList()
+                Categories = _context.Categories.ToList()               
             };
             if (postCategory.Post == null)
             {
                 return BadRequest();
-            }
-
-            string environment = _env.WebRootPath;
-            string folderPath = Path.Combine(environment, "img", "blog", postCategory.Post.Image);
-            FileInfo file = new FileInfo(folderPath);
-            if (System.IO.File.Exists(folderPath))
-            {
-                file.Delete();
-            };
-
+            }        
 
             return View(postCategory);
         }
@@ -144,6 +137,23 @@ namespace EduHome.Areas.Admin.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+
+            //if user don't choose image program enter here
+            if (postCategory.Post.Photo == null)
+            {
+                postCategory.Post.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
+                postCategory.Post.Image = postCategory.Image;
+
+                ModelState["Post.Photo"].ValidationState = ModelValidationState.Valid;
+                if (!ModelState.IsValid)
+                {
+                    return View(postCategory.Post);
+                }
+                _context.Posts.Update(postCategory.Post);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index), postCategory);
             }
 
             if (id != postCategory.Post.Id)
@@ -160,24 +170,32 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-
-            string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
+            //removing old image from local folder
             string environment = _env.WebRootPath;
-            string newSlider = Path.Combine(environment, "img", "blog", filename);
-            using (FileStream file = new FileStream(newSlider, FileMode.Create))
+            string folderPath = Path.Combine(environment, "img", "blog", postCategory.Image);
+            FileInfo oldFile = new FileInfo(folderPath);
+            if (System.IO.File.Exists(folderPath))
             {
-                postCategory.Post.Photo.CopyTo(file);
-            }
-            postCategory.Post.Image = filename;
-            postCategory.Post.Category = new Category
-            {
-                Name = postCategory.Category
+                oldFile.Delete();
             };
+
+            //coping new image in local folder
+            string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
+            string newSlider = Path.Combine(environment, "img", "blog", filename);
+            using (FileStream newFile = new FileStream(newSlider, FileMode.Create))
+            {
+                postCategory.Post.Photo.CopyTo(newFile);
+            }
+
+            //new image and category initiliazing to Post class
+            postCategory.Post.Image = filename;
+            postCategory.Post.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
+
 
             if (!ModelState.IsValid)
             {
                 return View(postCategory.Post);
-            }
+            }            
             _context.Posts.Update(postCategory.Post);
             _context.SaveChanges();
 

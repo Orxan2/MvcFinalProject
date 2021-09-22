@@ -14,5 +14,6 @@ namespace EduHome.ViewModels
         public List<Category> Categories { get; set; }
         public string Category { get; set; }
         public Post Post { get; set; }
+        public string Image { get; set; }
     }
 }

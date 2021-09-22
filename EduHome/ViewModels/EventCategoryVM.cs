@@ -14,5 +14,6 @@ namespace EduHome.ViewModels
         public List<TimeInterval> TimeIntervals { get; set; }
         public string TimeInterval { get; set; }
         public Event Event { get; set; }
+        public string Image { get; set; }
     }
 }

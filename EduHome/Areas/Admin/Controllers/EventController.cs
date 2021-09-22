@@ -4,6 +4,7 @@ using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace EduHome.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Event> @event = _context.Events.Include(e => e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
-                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(e => e.IsDeleted == false).ToList();
+                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).ToList();
             return View(@event);
         }
 
@@ -89,65 +90,132 @@ namespace EduHome.Areas.Admin.Controllers
             }
             eventCategory.Event.Image = filename;
             eventCategory.Event.Category = _context.Categories.FirstOrDefault(c=>c.Name == eventCategory.Category);
-            eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t=>t.Name == eventCategory.TimeInterval);
-            //eventCategory.Event.TimeInterval.Name = eventCategory.TimeInterval;
-
-            //eventCategory.Event.Category = new Category
-            //{
-            //    Name = eventCategory.Category
-            //};
-            //eventCategory.Event.TimeInterval = new TimeInterval
-            //{
-            //    Name = eventCategory.TimeInterval
-            //};
+            eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t=>t.Name == eventCategory.TimeInterval);        
 
             _context.Events.Add(eventCategory.Event);
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index), eventCategory);
-
         }
 
         // GET: EventController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Update(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            EventCategoryVM eventCategory = new EventCategoryVM
+            {
+                Event = _context.Events.Include(e => e.Category).Include(e => e.PostMessages).Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id),
+                Categories = _context.Categories.ToList(),
+                TimeIntervals = _context.TimeIntervals.ToList()
+            };
+            if (eventCategory.Event == null)
+            {
+                return BadRequest();
+            }           
+
+            return View(eventCategory);
         }
 
-        // POST: EventController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Update(int? id, EventCategoryVM eventCategory)
         {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            //if user don't choose image program enter here
+            if (eventCategory.Event.Photo == null)
             {
-                return View();
+                eventCategory.Event.Category = _context.Categories.FirstOrDefault(c => c.Name == eventCategory.Category);
+                eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t => t.Name == eventCategory.TimeInterval);
+                eventCategory.Event.Image = eventCategory.Image;
+
+                ModelState["Event.Photo"].ValidationState = ModelValidationState.Valid;
+                if (!ModelState.IsValid)
+                {
+                    return View(eventCategory.Event);
+                }
+                _context.Events.Update(eventCategory.Event);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index), eventCategory);
             }
+
+            if (id != eventCategory.Event.Id)
+            {
+                return NotFound();
+            }
+
+            if (!eventCategory.Event.Photo.ContentType.Contains("image"))
+            {
+                return NotFound();
+            }
+            if (eventCategory.Event.Photo.Length / 1024 > 3000)
+            {
+                return NotFound();
+            }
+
+            //removing old image from local folder
+            string environment = _env.WebRootPath;
+            string folderPath = Path.Combine(environment, "img", "event", eventCategory.Image);
+            FileInfo oldFile = new FileInfo(folderPath);
+            if (System.IO.File.Exists(folderPath))
+            {
+                oldFile.Delete();
+            };
+
+            //coping new image in local folder
+            string filename = Guid.NewGuid().ToString() + '-' + eventCategory.Event.Photo.FileName;
+            string newSlider = Path.Combine(environment, "img", "event", filename);
+            using (FileStream newFile = new FileStream(newSlider, FileMode.Create))
+            {
+                eventCategory.Event.Photo.CopyTo(newFile);
+            }
+            eventCategory.Event.Image = filename;
+            eventCategory.Event.Category = _context.Categories.FirstOrDefault(c => c.Name == eventCategory.Category);
+
+
+            if (!ModelState.IsValid)
+            {
+                return View(eventCategory.Event);
+            }
+            _context.Events.Update(eventCategory.Event);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index), eventCategory);
         }
 
         // GET: EventController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult DeleteOrActive(int? id)
         {
-            return View();
-        }
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        // POST: EventController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            Event @event = _context.Events.Include(e => e.Category).Include(e=>e.TimeInterval).Include(e=>e.EventSpeakers).
+                FirstOrDefault(e => e.Id == id);
+            if (@event == null)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            catch
-            {
-                return View();
-            }
+
+            if (@event.IsDeleted)
+                @event.IsDeleted = false;
+            else
+                @event.IsDeleted = true;
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
+      
+        
     }
 }
