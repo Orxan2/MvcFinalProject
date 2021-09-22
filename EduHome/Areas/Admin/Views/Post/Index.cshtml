@@ -31,7 +31,7 @@
                         <td>@count</td>
                         <td>@item.ByWhom</td>
                         <td>@item.Title</td>
-                        <td>@item.Details.Substring(0, 20)...</td>
+                        <td>@(item.Details.Length > 20 ? item.Details.Substring(0, 20) : item.Details)</td>
                         <td>@item.IsDeleted</td>
                         <td>
                             <ul class="d-flex list-unstyled">

@@ -17,6 +17,8 @@ namespace EduHome.Models.Base
         public string Message { get; set; }
         [Required, StringLength(maximumLength: 25)]
         public string Subject { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsReadable { get; set; }
 
     }
 }

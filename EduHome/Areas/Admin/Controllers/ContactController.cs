@@ -90,7 +90,7 @@ namespace EduHome.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [AutoValidateAntiforgeryToken] 
         public IActionResult Update(int? id, ContactVM contactVM)
         {
             if (id == null)
@@ -158,6 +158,40 @@ namespace EduHome.Areas.Admin.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index), contactVM);
+        }
+
+        public IActionResult Messages()
+        {
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.ContactId != null && pm.IsDeleted == false).ToList();
+
+            return View(postMessages);
+        }
+
+        
+        public IActionResult MessageDelete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.ContactId != null && pm.IsDeleted == false).ToList();
+
+            PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
+                  Include(pm => pm.Event).Where(pm => pm.ContactId != null && pm.IsDeleted == false).FirstOrDefault(pm => pm.Id == id);
+
+            if (message == null)
+            {
+                return BadRequest();
+            }
+
+            message.IsDeleted = true;
+
+            _context.PostMessages.Update(message);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Messages));
         }
     }
 }

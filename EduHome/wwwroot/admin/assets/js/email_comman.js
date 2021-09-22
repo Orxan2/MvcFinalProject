@@ -51,5 +51,6 @@ $(document).ready(function() {
 					$('#email-list .checkbox').children('input').attr('checked', false);
 					$("#emails tbody tr").removeClass('row_selected');			
 			});	
-			
+
+
 });

@@ -256,10 +256,10 @@
                         <a href="javascript:;"> <i class="material-icons">invert_colors</i> <span class="title">Blog</span></a>
                     </li>
                     <li>
-                        <a href="javascript:;"> <i class="material-icons">airplay</i> <span class="title">Contact</span> <span class=" arrow"></span> </a>
+                        <a href="javascript:;"> <i class="fa fa-comment"></i> <span class="title">Contact</span> <span class=" arrow"></span> </a>
                         <ul class="sub-menu">
                             <li> <a asp-controller="Contact" asp-action="Index">Addresses</a> </li>
-                            <li> <a href="boxed_layout.html">Messages</a> </li>                           
+                            <li> <a asp-controller="Contact" asp-action="Messages">Messages</a> </li>
                         </ul>
                     </li>
                     <li>
@@ -704,8 +704,7 @@
     <script src="~/admin/assets/js/chat.js" type="text/javascript"></script>
     <!-- END CORE TEMPLATE JS -->
     <!-- BEGIN PAGE LEVEL JS -->
-    <script src="~/admin/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
-    <script src="~/admin/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+
 
     <script src="~/admin/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="~/admin/assets/plugins/jquery-ricksaw-chart/js/raphael-min.js"></script>
@@ -722,8 +721,11 @@
     <script src="~/admin/assets/plugins/Mapplic/mapplic/mapplic.js" type="text/javascript"></script>
     <script src="~/admin/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="~/admin/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
-    <script src="~/admin/assets/js/form_elements.js"></script>
 
+    <script src="~/admin/assets/js/form_elements.js"></script>
+    <script src="~/admin/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
+    <script src="~/admin/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+    @RenderSection("scripts", false)
 </body>
 
 <!-- Mirrored from webarch.revox.io/3.0/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Oct 2020 17:27:35 GMT -->

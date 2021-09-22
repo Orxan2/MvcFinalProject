@@ -42,6 +42,12 @@ namespace EduHome.DataContext
             modelBuilder.Entity<Address>().
               Property(p => p.IsDeleted).HasDefaultValue(false);
 
+            modelBuilder.Entity<PostMessage>().
+            Property(p => p.IsDeleted).HasDefaultValue(false);
+
+            modelBuilder.Entity<PostMessage>().
+            Property(p => p.IsReadable).HasDefaultValue(false);
+
             modelBuilder.Entity<Category>(e => e.HasData(
                 new Category
                 {
