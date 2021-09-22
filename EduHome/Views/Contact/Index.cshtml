@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-5 col-sm-5 col-xs-12">
                 <div class="contact-contents text-center">
-                    @foreach (var address in Model.Contact.Addresses)
+                    @foreach (var address in Model.Addresses)
                     {
                         <div class="single-contact mb-65">
                             <div class="contact-icon">
@@ -29,22 +29,16 @@
                                 <p>@address.City, USA</p>
                             </div>
                         </div>
-                    }                 
+                    }
                 </div>
             </div>
             <div class="col-md-7 col-sm-7 col-xs-12">
                 <div class="reply-area">
                     <h3>LEAVE A REPLY</h3>
-                    <ul class="list-group border-0 my-4">
-                        @foreach (var message in Model.PostMessages)
-                        {
-                            <li class="list-group-item list-group-item-info border-0">
-                                <h1>@message.Email</h1>
-                                <p>@message.Message</p>
-                            </li>
-                        }
-                    </ul>
+                   
                     <form method="post">
+                        <div asp-validation-summary="ModelOnly"></div>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <label asp-for="PostMessage.Name">Name</label>
@@ -75,3 +69,7 @@
     </div>
 </div>
 <!-- Contact End -->
+@*@section validate {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}*@

@@ -148,7 +148,7 @@ namespace EduHome.Areas.Admin.Controllers
                 ModelState["Post.Photo"].ValidationState = ModelValidationState.Valid;
                 if (!ModelState.IsValid)
                 {
-                    return View(postCategory.Post);
+                    return View(postCategory);
                 }
                 _context.Posts.Update(postCategory.Post);
                 _context.SaveChanges();

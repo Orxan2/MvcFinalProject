@@ -1,0 +1,37 @@
+﻿@model Address
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="content sm-gutter">
+    <div class="page-title">
+        <h1>Blog Detail</h1>
+        <a asp-action="Index" class="btn btn-success text-light"><i class="fa fa-arrow-left"></i></a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Image :</h3>
+        </div>
+        <div class="col-md-8">
+            <img src="~/img/contact/@Model.Image" width="50" height="50" alt="address-details">
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">City :</h3>
+        </div>
+        <div class="col-md-8">
+            <h3>@Model.City</h3>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Street :</h3>
+        </div>
+        <div class="col-md-8">
+            <h3>@Model.Street</h3>
+        </div>
+    </div>   
+</div>

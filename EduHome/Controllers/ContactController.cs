@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace EduHome.Controllers
@@ -23,26 +25,27 @@ namespace EduHome.Controllers
             {
                 Contact = _db.Contact.Include(a => a.Addresses).Include(a => a.PostMessages).FirstOrDefault(),
                 PostMessages = _db.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).Include(pm => pm.Post).Where(pm => pm.ContactId != null).ToList(),
-                PostMessage = _db.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).Include(pm => pm.Post).FirstOrDefault(pm => pm.ContactId != null)
+                PostMessage = _db.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).Include(pm => pm.Post).FirstOrDefault(pm => pm.ContactId != null),
+                Addresses = _db.Addresses.Include(a=>a.Contact).ToList()
             };
            return View(contact);
         }
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Index(PostMessage postMessage)
+        public IActionResult Index(ContactVM contactVM)
         {
-            if (postMessage.ContactId == null)
-            {
-                return NotFound();
-            }
+            contactVM.Addresses = _db.Addresses.Include(a => a.Contact).ToList();
 
             if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(contactVM);
             }
+            contactVM.PostMessage.ContactId = 1;            
 
-
-            return View();
+            _db.PostMessages.Add(contactVM.PostMessage);
+            _db.SaveChanges();
+            
+            return View(contactVM);
         }
     }
 }
