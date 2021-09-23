@@ -40,11 +40,11 @@
                         <span asp-validation-for="Post.Photo"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Category">Category</label>
-                        <select asp-for="Category" class="form-control">
-                            @foreach (Category item in Model.Categories)
+                        <label asp-for="Post.CourseId">Courses</label>
+                        <select asp-for="Post.CourseId" class="form-control">
+                            @foreach (Course item in Model.Courses)
                             {
-                                <option>@item.Name</option>
+                                <option value="@item.Id">@item.Title</option>
                             }
                         </select>
                     </div>

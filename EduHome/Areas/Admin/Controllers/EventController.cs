@@ -89,8 +89,6 @@ namespace EduHome.Areas.Admin.Controllers
                 eventCategory.Event.Photo.CopyTo(file);
             }
             eventCategory.Event.Image = filename;
-            eventCategory.Event.Course = _context.Courses.Include(c => c.Category).FirstOrDefault(c => c.Id == eventCategory.CourseId);
-            eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t => t.Id == eventCategory.TimeIntervalId);
 
             _context.Events.Add(eventCategory.Event);
             _context.SaveChanges();
@@ -135,8 +133,6 @@ namespace EduHome.Areas.Admin.Controllers
             //if user don't choose image program enter here
             if (eventCategory.Event.Photo == null)
             {
-                eventCategory.Event.Course = _context.Courses.FirstOrDefault(c => c.Id == eventCategory.CourseId);
-                eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t => t.Id == eventCategory.TimeIntervalId);
                 eventCategory.Event.Image = eventCategory.Image;
 
                 ModelState["Event.Photo"].ValidationState = ModelValidationState.Valid;
@@ -181,7 +177,6 @@ namespace EduHome.Areas.Admin.Controllers
                 eventCategory.Event.Photo.CopyTo(newFile);
             }
             eventCategory.Event.Image = filename;
-            eventCategory.Event.Course = _context.Courses.FirstOrDefault(c => c.Id == eventCategory.CourseId);
 
 
             if (!ModelState.IsValid)

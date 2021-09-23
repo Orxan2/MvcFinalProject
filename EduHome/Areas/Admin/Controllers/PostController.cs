@@ -73,8 +73,8 @@ namespace EduHome.Areas.Admin.Controllers
         {
             PostCategoryVM postCategory = new PostCategoryVM
             {
-                Categories = _context.Categories.Include(c => c.Courses).
-                ThenInclude(c => c.Category).ToList()
+                Courses = _context.Courses.Include(c => c.Category).
+                Include(c => c.Feature).Include(c=>c.Posts).Include(c=>c.Events).ToList()
             };
             return View(postCategory);
         }
@@ -105,7 +105,6 @@ namespace EduHome.Areas.Admin.Controllers
                 postCategory.Post.Photo.CopyTo(file);
             }
             postCategory.Post.Image = filename;
-            postCategory.Post.Course.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
 
             _context.Posts.Add(postCategory.Post);
             _context.SaveChanges();
@@ -123,9 +122,10 @@ namespace EduHome.Areas.Admin.Controllers
 
             PostCategoryVM postCategory = new PostCategoryVM
             {
+                Courses = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
+                Include(c => c.Posts).ToList(),
                 Post = _context.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
                 Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
-                Categories = _context.Categories.Include(c => c.Courses).ThenInclude(p => p.Category).ToList()
             };
             if (postCategory.Post == null)
             {
@@ -147,7 +147,6 @@ namespace EduHome.Areas.Admin.Controllers
             //if user don't choose image program enter here
             if (postCategory.Post.Photo == null)
             {
-                postCategory.Post.Course.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
                 postCategory.Post.Image = postCategory.Image;
 
                 ModelState["Post.Photo"].ValidationState = ModelValidationState.Valid;
@@ -194,7 +193,6 @@ namespace EduHome.Areas.Admin.Controllers
 
             //new image and category initiliazing to Post class
             postCategory.Post.Image = filename;
-            postCategory.Post.Course.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
 
 
             if (!ModelState.IsValid)

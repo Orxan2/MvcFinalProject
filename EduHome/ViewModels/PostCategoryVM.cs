@@ -8,10 +8,11 @@ namespace EduHome.ViewModels
 {
     public class PostCategoryVM
     {
-        public List<Post> Posts { get; set; }
-        public List<Category> Categories { get; set; }
-        public string Category { get; set; }
+        //public List<Post> Posts { get; set; }
+        public List<Course> Courses { get; set; }
+        public List<TimeInterval> TimeIntervals { get; set; }
         public Post Post { get; set; }
         public string Image { get; set; }
+
     }
 }
