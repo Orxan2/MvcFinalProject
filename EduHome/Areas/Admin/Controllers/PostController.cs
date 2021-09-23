@@ -205,7 +205,7 @@ namespace EduHome.Areas.Admin.Controllers
         }
 
 
-        public IActionResult Messages()
+        public IActionResult Comments()
         {
             List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm=>pm.Course).Include(pm => pm.Post).
                 Include(pm => pm.Event).Where(pm => pm.PostId != null).ToList();
@@ -214,17 +214,14 @@ namespace EduHome.Areas.Admin.Controllers
         }
 
 
-        public IActionResult MessageDeleteOrActive(int? id)
+        public IActionResult MakeDeleteOrActive(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
-                Include(pm => pm.Event).Where(pm => pm.PostId != null).ToList();
-
-            PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
-                  Include(pm => pm.Event).Include(pm=>pm.Course).Where(pm => pm.PostId != null).FirstOrDefault(pm => pm.Id == id);
+            PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
+               Include(pm => pm.Event).Where(pm => pm.PostId != null).FirstOrDefault(pm => pm.Id == id);
 
             if (message == null)
             {
@@ -240,7 +237,7 @@ namespace EduHome.Areas.Admin.Controllers
             _context.PostMessages.Update(message);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Messages));
+            return RedirectToAction(nameof(Comments));
         }
     }
 }

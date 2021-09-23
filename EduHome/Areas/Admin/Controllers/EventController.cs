@@ -213,5 +213,40 @@ namespace EduHome.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Comments()
+        {
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.EventId != null).ToList();
+
+            return View(postMessages);
+        }
+
+
+        public IActionResult MakeDeleteOrActive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.EventId != null).FirstOrDefault(pm => pm.Id == id);
+
+            if (message == null)
+            {
+                return BadRequest();
+            }
+
+            if (message.IsDeleted == true)
+                message.IsDeleted = false;
+            else
+                message.IsDeleted = true;
+
+
+            _context.PostMessages.Update(message);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Comments));
+        }
     }
 }

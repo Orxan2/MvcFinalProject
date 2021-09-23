@@ -256,7 +256,7 @@
                         <a href="javascript:;"> <i class="material-icons">invert_colors</i> <span class="title">Blog</span><span class=" arrow"></span></a>
                         <ul class="sub-menu">
                             <li> <a asp-controller="Post" asp-action="Index">Blog Operations</a> </li>
-                            <li> <a asp-controller="Post" asp-action="Messages">Messages</a> </li>
+                            <li> <a asp-controller="Post" asp-action="Comments">Comments</a> </li>
                         </ul>
                     </li>
                     <li>
@@ -301,7 +301,11 @@
                         </ul>
                     </li>
                     <li>
-                        <a asp-controller="Event" asp-action="Index"> <i class="material-icons">location_on</i> <span class="title">Event</span></a>
+                        <a href="javascript:;"> <i class="material-icons">location_on</i> <span class="title">Event</span><span class=" arrow"></span> </a>
+                        <ul class="sub-menu">
+                            <li> <a asp-controller="Event" asp-action="Index">Event Operations</a> </li>
+                            <li> <a asp-controller="Event" asp-action="Comments">Comments</a> </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="charts.html"> <i class="material-icons">timeline</i> <span class="title">Charts</span> </a>

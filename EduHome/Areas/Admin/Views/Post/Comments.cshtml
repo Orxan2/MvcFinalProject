@@ -1,6 +1,6 @@
 ﻿@model List<PostMessage>
 @{
-    ViewData["Title"] = "Blog's Messages";
+    ViewData["Title"] = "Blog's Comments";
 }
 
 
@@ -37,7 +37,7 @@
                     <tr>
                         <td class="clickable v-align-middle">
                             <div class="check-success text-center">
-                                <a asp-action="MessageDeleteOrActive" asp-route-id="@message.Id" class="btn p-2 @(message.IsDeleted?"bg-success text-white":"bg-danger text-white")"><i class="@(message.IsDeleted?"fa fa-unlock":"fa fa-lock")"></i></a>
+                                <a asp-action="MakeDeleteOrActive" asp-route-id="@message.Id" class="btn p-2 @(message.IsDeleted?" bg-danger text-white":"bg-success text-white")"><i class="@(message.IsDeleted?" fa fa-lock":"fa fa-unlock")"></i></a>
                             </div>
                         </td>
                         <td class="clickable v-align-middle">
