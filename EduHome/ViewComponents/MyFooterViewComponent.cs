@@ -19,7 +19,7 @@ namespace EduHome.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            Footer footer = _db.Footer.Include(f => f.Phones).Include(f => f.SocialLinks).FirstOrDefault();
+            Footer footer = _db.Footer.Include(f => f.Phones).FirstOrDefault();
 
             return View(await Task.FromResult(footer));
         }

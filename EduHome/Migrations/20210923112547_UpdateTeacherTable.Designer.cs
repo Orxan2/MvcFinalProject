@@ -4,14 +4,16 @@ using EduHome.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    partial class EduhomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210923112547_UpdateTeacherTable")]
+    partial class UpdateTeacherTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -823,7 +825,6 @@ namespace EduHome.Migrations
                             Faculty = "Din, Department of Micro Biology",
                             Fullname = "STUART KELVIN",
                             Hobbies = "music, travelling, catching fish",
-                            Image = "teacher1.jpg",
                             Innovation = 85,
                             IsDeleted = false,
                             Language = 85,

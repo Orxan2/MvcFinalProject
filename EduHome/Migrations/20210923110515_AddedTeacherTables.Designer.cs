@@ -4,14 +4,16 @@ using EduHome.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    partial class EduhomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210923110515_AddedTeacherTables")]
+    partial class AddedTeacherTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -725,7 +727,6 @@ namespace EduHome.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AboutTeacher")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Communication")
@@ -741,7 +742,6 @@ namespace EduHome.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Experience")
@@ -751,44 +751,28 @@ namespace EduHome.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Faculty")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Fullname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(75)")
-                        .HasMaxLength(75);
-
-                    b.Property<string>("Hobbies")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("Fullname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hobbies")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Innovation")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pinterest")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Professional")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(59)")
-                        .HasMaxLength(59);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Skype")
                         .HasColumnType("nvarchar(max)");
@@ -823,9 +807,7 @@ namespace EduHome.Migrations
                             Faculty = "Din, Department of Micro Biology",
                             Fullname = "STUART KELVIN",
                             Hobbies = "music, travelling, catching fish",
-                            Image = "teacher1.jpg",
                             Innovation = 85,
-                            IsDeleted = false,
                             Language = 85,
                             Phone = "(+125) 5896 548 9874",
                             Pinterest = "pinterest.com",

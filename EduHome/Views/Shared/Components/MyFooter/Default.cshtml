@@ -15,10 +15,10 @@
                         <p>@Model.Slogan</p>
                         <div class="footer-social">
                             <ul>
-                                @foreach (var socialLink in Model.SocialLinks)
-                                {
-                                    <li><a asp-host="@socialLink.Link" target="_blank"><i class="@socialLink.Icon"></i></a></li>
-                                }
+                                <li><a asp-host="@Model.Facebook" target="_blank"><i class="zmdi zmdi-facebook"></i></a></li>
+                                <li><a asp-host="@Model.Pinterest." target="_blank"><i class="zmdi zmdi-pinterest"></i></a></li>
+                                <li><a asp-host="@Model.Vimeo" target="_blank"><i class="zmdi zmdi-vimeo"></i></a></li>
+                                <li><a asp-host="@Model.Twitter" target="_blank"><i class="zmdi zmdi-twitter"></i></a></li>
                             </ul>
                         </div>
                     </div>

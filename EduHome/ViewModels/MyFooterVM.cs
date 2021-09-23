@@ -9,7 +9,6 @@ namespace EduHome.ViewModels
     public class MyFooterVM
     {
         public List<Footer> Footers { get; set; }
-        public List<SocialLink> SocialLinks { get; set; }
         public List<Phone> Phones { get; set; }
     }
 }

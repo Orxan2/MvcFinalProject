@@ -28,7 +28,7 @@ namespace EduHome.DataContext
         public DbSet<EventSpeaker> EventSpeakers { get; set; }
         public DbSet<TimeInterval> TimeIntervals { get; set; }
         public DbSet<Footer> Footer { get; set; }
-        public DbSet<SocialLink> SocialLinks { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }     
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Header> Header { get; set; }
 
@@ -44,6 +44,9 @@ namespace EduHome.DataContext
 
             modelBuilder.Entity<Course>().
                 Property(c => c.IsDeleted).HasDefaultValue(false);
+
+            modelBuilder.Entity<Teacher>().
+               Property(t => t.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<Course>().
              Property(c => c.CreatedDate).HasColumnType("Date");
@@ -309,10 +312,14 @@ new Course
                  Id = 1,
                  Address = "City, Roadno 785 New York",
                  Copyright = "<p>Copyright © <a href='#' target='_blank'>HasTech</a> 2017. All Right Reserved By Hastech.</p>",
-                 Email = "info@eduhome.com",
                  Logo = "footer-logo.png",
                  Slogan = "I must explain to you how all this mistaken idea of denoung pleure and praising pain was born and give you a coete account of the system.",
-                 website = "www.eduhome.com"
+                 website = "www.eduhome.com",
+                 Facebook = "facebook.com",
+                 Pinterest = "pinterest.com",
+                 Twitter = "twitter.com",
+                 Vimeo = "vimeo.com",
+                 Email = "info@eduhome.com",
              })
          );
 
@@ -330,42 +337,35 @@ new Course
                   FooterId = 1
               })
           );
-            modelBuilder.Entity<SocialLink>(e => e.HasData(
-             new SocialLink
+            modelBuilder.Entity<Teacher>(e => e.HasData(
+             new Teacher
              {
                  Id = 1,
-                 Name = "facebook",
-                 Icon = "zmdi zmdi-facebook",
-                 Link = "facebook.com",
-                 FooterId = 1
-             },
-            new SocialLink
-            {
-                Id = 2,
-                Name = "pinterest",
-                Icon = "zmdi zmdi-pinterest",
-                Link = "pinterest.com",
-                FooterId = 1
-            },
-            new SocialLink
-            {
-                Id = 3,
-                Name = "vimeo",
-                Icon = "zmdi zmdi-vimeo",
-                Link = "vimeo.com",
-                FooterId = 1
-            },
-            new SocialLink
-            {
-                Id = 4,
-                Name = "twitter",
-                Icon = "zmdi zmdi-twitter",
-                Link = "twitter.com",
-                FooterId = 1
-            })
+                AboutTeacher = "I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness pcias unde omnis iste natus error sit voluptatem accusantium ue laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quas i architeo beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas",
+                Faculty = "Din, Department of Micro Biology",
+                Hobbies = "music, travelling, catching fish",
+                Phone = "(+125) 5896 548 9874",
+                Experience =7,
+                Fullname = "STUART KELVIN",
+                Professional = "Associate Professor",
+                Communication = 95,
+                Design = 95,
+                Language = 85,
+                TeamLeader = 90,
+                Development = 85,
+                Innovation = 85,
+                 Email = " stuart@eduhome.com",
+                 Skype = "stuart.k",
+                 Facebook = "facebook.com",
+                 Pinterest = "pinterest.com",
+                 Twitter = "twitter.com",
+                 Vimeo = "vimeo.com", 
+                 Image = "teacher1.jpg",
+                 CourseId = 1,
+
+             })
          );
-
-
+      
             modelBuilder.Entity<Contact>(e => e.HasData(
      new Contact
      {
@@ -399,9 +399,6 @@ new Course
               ContactId = 1
           })
       );
-
-
-
         }
     }
 }
