@@ -43,9 +43,8 @@ namespace EduHome.Controllers
             PostDetailVM postDetailsVM = new PostDetailVM
             {
                 Post = post,
-                Categories = _db.Categories.Include(c => c.Courses).ThenInclude(c => c.Category).ToList(),
-                LatestPosts = _db.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).OrderByDescending(p => p.Id).Take(3).ToList(),
-                PostMessages = _db.PostMessages.Include(pm => pm.Event).Include(pm => pm.Post).Where(pm => pm.PostId == id).ToList()
+                PostMessages = _db.PostMessages.Include(pm => pm.Event).Include(pm=>pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
+                Where(pm => pm.PostId == id && pm.IsDeleted == false).ToList()
             };
 
             return View(postDetailsVM);

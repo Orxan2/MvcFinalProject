@@ -32,6 +32,8 @@ namespace EduHome.Models.Entity
         public List<Post> Posts { get; set; }
         public List<Event> Events { get; set; }
         public List<Teacher> Teachers { get; set; }
+        public List<PostMessage> PostMessages { get; set; }
+
 
     }
 }

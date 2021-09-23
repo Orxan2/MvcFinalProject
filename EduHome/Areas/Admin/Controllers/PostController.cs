@@ -110,7 +110,6 @@ namespace EduHome.Areas.Admin.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index), postCategory);
-
         }
 
         public IActionResult Update(int? id)
@@ -203,6 +202,45 @@ namespace EduHome.Areas.Admin.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index), postCategory);
+        }
+
+
+        public IActionResult Messages()
+        {
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm=>pm.Course).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.PostId != null).ToList();
+
+            return View(postMessages);
+        }
+
+
+        public IActionResult MessageDeleteOrActive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.PostId != null).ToList();
+
+            PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
+                  Include(pm => pm.Event).Include(pm=>pm.Course).Where(pm => pm.PostId != null).FirstOrDefault(pm => pm.Id == id);
+
+            if (message == null)
+            {
+                return BadRequest();
+            }
+
+            if (message.IsDeleted == true)
+                message.IsDeleted = false;
+            else
+                message.IsDeleted = true;
+
+
+            _context.PostMessages.Update(message);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Messages));
         }
     }
 }

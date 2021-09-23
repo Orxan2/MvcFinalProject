@@ -13,6 +13,8 @@ namespace EduHome.Models.Entity
         public int? PostId { get; set; }
         public Event Event { get; set; }
         public int? EventId { get; set; }
+        public Course Course { get; set; }
+        public int? CourseId { get; set; }
         public Contact Contact { get; set; }
         public int? ContactId { get; set; }
     }

@@ -253,7 +253,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;"> <i class="material-icons">invert_colors</i> <span class="title">Blog</span></a>
+                        <a href="javascript:;"> <i class="material-icons">invert_colors</i> <span class="title">Blog</span><span class=" arrow"></span></a>
+                        <ul class="sub-menu">
+                            <li> <a asp-controller="Post" asp-action="Index">Blog Operations</a> </li>
+                            <li> <a asp-controller="Post" asp-action="Messages">Messages</a> </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="javascript:;"> <i class="fa fa-comment"></i> <span class="title">Contact</span> <span class=" arrow"></span> </a>
