@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace EduHome.Areas.Admin.Controllers
 {
     [Area("admin")]
@@ -53,7 +52,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Address address = _context.Addresses.Include(a=>a.Contact).FirstOrDefault(a => a.Id == id);
+            Address address = _context.Addresses.Include(a => a.Contact).FirstOrDefault(a => a.Id == id);
             if (address == null)
             {
                 return BadRequest();
@@ -90,7 +89,7 @@ namespace EduHome.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken] 
+        [AutoValidateAntiforgeryToken]
         public IActionResult Update(int? id, ContactVM contactVM)
         {
             if (id == null)
@@ -168,7 +167,7 @@ namespace EduHome.Areas.Admin.Controllers
             return View(postMessages);
         }
 
-        
+
         public IActionResult MessageDelete(int? id)
         {
             if (id == null)

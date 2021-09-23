@@ -16,7 +16,7 @@ namespace EduHome.ViewComponents
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
-        {            
+        {
             return View(await Task.FromResult("Default"));
         }
     }

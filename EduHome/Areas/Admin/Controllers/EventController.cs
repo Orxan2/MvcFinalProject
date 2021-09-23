@@ -2,7 +2,6 @@
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EduHome.Areas.Admin.Controllers
 {
@@ -27,8 +27,8 @@ namespace EduHome.Areas.Admin.Controllers
         // GET: EventController
         public IActionResult Index()
         {
-            List<Event> @event = _context.Events.Include(e => e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
-                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).ToList();
+            List<Event> @event = _context.Events.Include(e => e.Course).ThenInclude(c => c.Category).Include(e => e.TimeInterval).
+                Include(e => e.PostMessages).Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).ToList();
             return View(@event);
         }
 
@@ -40,8 +40,8 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Event @event = _context.Events.Include(e => e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
-                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id);
+            Event @event = _context.Events.Include(e => e.Course).ThenInclude(c => c.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
+            Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id);
 
             if (@event == null)
             {
@@ -56,7 +56,7 @@ namespace EduHome.Areas.Admin.Controllers
         {
             EventCategoryVM eventCategory = new EventCategoryVM
             {
-                Categories = _context.Categories.ToList(),
+                Courses = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).Include(c => c.Posts).ToList(),
                 TimeIntervals = _context.TimeIntervals.ToList()
             };
             return View(eventCategory);
@@ -89,8 +89,8 @@ namespace EduHome.Areas.Admin.Controllers
                 eventCategory.Event.Photo.CopyTo(file);
             }
             eventCategory.Event.Image = filename;
-            eventCategory.Event.Category = _context.Categories.FirstOrDefault(c=>c.Name == eventCategory.Category);
-            eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t=>t.Name == eventCategory.TimeInterval);        
+            eventCategory.Event.Course = _context.Courses.Include(c => c.Category).FirstOrDefault(c => c.Id == eventCategory.CourseId);
+            eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t => t.Id == eventCategory.TimeIntervalId);
 
             _context.Events.Add(eventCategory.Event);
             _context.SaveChanges();
@@ -108,14 +108,17 @@ namespace EduHome.Areas.Admin.Controllers
 
             EventCategoryVM eventCategory = new EventCategoryVM
             {
-                Event = _context.Events.Include(e => e.Category).Include(e => e.PostMessages).Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id),
-                Categories = _context.Categories.ToList(),
-                TimeIntervals = _context.TimeIntervals.ToList()
+                Event = _context.Events.Include(e => e.Course).ThenInclude(c => c.Category).Include(e => e.PostMessages).
+                Where(e => e.IsDeleted == false).FirstOrDefault(e => e.Id == id),
+                TimeIntervals = _context.TimeIntervals.ToList(),
+                Courses = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
+                Include(c => c.Posts).ToList()
+
             };
             if (eventCategory.Event == null)
             {
                 return BadRequest();
-            }           
+            }
 
             return View(eventCategory);
         }
@@ -132,8 +135,8 @@ namespace EduHome.Areas.Admin.Controllers
             //if user don't choose image program enter here
             if (eventCategory.Event.Photo == null)
             {
-                eventCategory.Event.Category = _context.Categories.FirstOrDefault(c => c.Name == eventCategory.Category);
-                eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t => t.Name == eventCategory.TimeInterval);
+                eventCategory.Event.Course = _context.Courses.FirstOrDefault(c => c.Id == eventCategory.CourseId);
+                eventCategory.Event.TimeInterval = _context.TimeIntervals.FirstOrDefault(t => t.Id == eventCategory.TimeIntervalId);
                 eventCategory.Event.Image = eventCategory.Image;
 
                 ModelState["Event.Photo"].ValidationState = ModelValidationState.Valid;
@@ -178,7 +181,7 @@ namespace EduHome.Areas.Admin.Controllers
                 eventCategory.Event.Photo.CopyTo(newFile);
             }
             eventCategory.Event.Image = filename;
-            eventCategory.Event.Category = _context.Categories.FirstOrDefault(c => c.Name == eventCategory.Category);
+            eventCategory.Event.Course = _context.Courses.FirstOrDefault(c => c.Id == eventCategory.CourseId);
 
 
             if (!ModelState.IsValid)
@@ -199,7 +202,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Event @event = _context.Events.Include(e => e.Category).Include(e=>e.TimeInterval).Include(e=>e.EventSpeakers).
+            Event @event = _context.Events.Include(e => e.Course).ThenInclude(c => c.Category).Include(e => e.TimeInterval).Include(e => e.EventSpeakers).
                 FirstOrDefault(e => e.Id == id);
             if (@event == null)
             {
@@ -215,7 +218,5 @@ namespace EduHome.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-      
-        
     }
 }

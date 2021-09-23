@@ -42,8 +42,8 @@ namespace EduHome
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name:"admin",
-                    pattern:"{area:exists}/{controller=dashboard}/{action=index}/{id?}"
+                    name: "admin",
+                    pattern: "{area:exists}/{controller=dashboard}/{action=index}/{id?}"
                     );
                 endpoints.MapControllerRoute(
                    name: "default",

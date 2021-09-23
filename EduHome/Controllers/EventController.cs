@@ -19,8 +19,8 @@ namespace EduHome.Controllers
         }
         public IActionResult Index()
         {
-            var events = _db.Events.Include(e => e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
-                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(e=>e.IsDeleted == false).ToList();
+            var events = _db.Events.Include(e => e.Course).ThenInclude(c => c.Category).Include(e=>e.TimeInterval).Include(e => e.PostMessages).
+                Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(e => e.IsDeleted == false).ToList();
 
             return View(events);
         }
@@ -32,7 +32,7 @@ namespace EduHome.Controllers
                 return NotFound();
             }
 
-            Event @event = _db.Events.Include(e=>e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
+            Event @event = _db.Events.Include(p => p.Course).ThenInclude(c => c.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
                 Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(p => p.IsDeleted == false).FirstOrDefault(b => b.Id == id);
 
             if (@event == null)
@@ -58,7 +58,7 @@ namespace EduHome.Controllers
                 return NotFound();
             }
 
-            Event @event = _db.Events.Include(e => e.Category).Include(e => e.TimeInterval).Include(e => e.PostMessages).
+            Event @event = _db.Events.Include(p => p.Course).ThenInclude(c => c.Category).Include(e => e.PostMessages).
                 Include(e => e.EventSpeakers).ThenInclude(es => es.Speaker).Where(p => p.IsDeleted == false).FirstOrDefault(b => b.Id == id);
 
             if (@event == null)
@@ -72,7 +72,7 @@ namespace EduHome.Controllers
             postMessage.EventId = @event.Id;
             EventDetailVM eventDetailVM = new EventDetailVM
             {
-                Event = @event,               
+                Event = @event,
                 PostMessages = _db.PostMessages.Include(pm => pm.Event).Include(pm => pm.Post).Where(pm => pm.PostId == id).ToList(),
                 PostMessage = postMessage
             };
@@ -81,7 +81,7 @@ namespace EduHome.Controllers
             {
                 return View(eventDetailVM);
             }
-            
+
             eventDetailVM.PostMessages.Add(postMessage);
             _db.Add(postMessage);
             _db.SaveChanges();

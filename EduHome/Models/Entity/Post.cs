@@ -24,8 +24,8 @@ namespace EduHome.Models.Entity
         [DataType(dataType:DataType.Text)]
         public string Details { get; set; }
         public bool IsDeleted { get; set; }
-        public Category Category { get; set; }
-        public int? CategoryId { get; set; }
+        public Course Course { get; set; }
+        public int? CourseId { get; set; }
         public List<PostMessage> PostMessages { get; set; }
 
     }

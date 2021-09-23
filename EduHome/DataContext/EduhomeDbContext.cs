@@ -13,22 +13,25 @@ namespace EduHome.DataContext
         {
         }
 
-        public DbSet<Post> Posts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Feature> Features { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<CourseTheme> CourseThemes { get; set; }
-        public DbSet<CourseThemeCourse> CourseThemeCourses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Post> Posts { get; set; }
+
+
         public DbSet<PostMessage> PostMessages { get; set; }
-        public DbSet<EventSpeaker> EventSpeakers { get; set; }
+
         public DbSet<Event> Events { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
+        public DbSet<EventSpeaker> EventSpeakers { get; set; }
         public DbSet<TimeInterval> TimeIntervals { get; set; }
         public DbSet<Footer> Footer { get; set; }
         public DbSet<SocialLink> SocialLinks { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Header> Header { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<Contact> Contact { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,17 +39,26 @@ namespace EduHome.DataContext
             modelBuilder.Entity<Post>().
                 Property(p => p.Date).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
+            modelBuilder.Entity<Course>().
+                Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
+
+            modelBuilder.Entity<Course>().
+                Property(c => c.IsDeleted).HasDefaultValue(false);
+
+            modelBuilder.Entity<Course>().
+             Property(c => c.CreatedDate).HasColumnType("Date");
+
             modelBuilder.Entity<Post>().
                Property(p => p.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<Address>().
-              Property(p => p.IsDeleted).HasDefaultValue(false);
+              Property(a => a.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<PostMessage>().
-            Property(p => p.IsDeleted).HasDefaultValue(false);
+            Property(pm => pm.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<PostMessage>().
-            Property(p => p.IsReadable).HasDefaultValue(false);
+            Property(pm => pm.IsReadable).HasDefaultValue(false);
 
             modelBuilder.Entity<Category>(e => e.HasData(
                 new Category
@@ -82,6 +94,33 @@ namespace EduHome.DataContext
                 )
             );
 
+            modelBuilder.Entity<Feature>(e => e.HasData(
+new Feature
+{
+    Id = 1,
+    Fee = 789,
+    LessonTime = 3,
+    Language = "English",
+    Duration = 6,
+    SkillLevel = "All",
+    Assesments = "Self",
+    StudentQuantity = 420
+})
+);
+            modelBuilder.Entity<Course>(e => e.HasData(
+new Course
+{
+    Id = 1,
+    AboutCourse = "I must explain to you how all this a mistaken idea of ncing great explorer of the rut the is lder of human happinescias unde omnis iste natus error sit volptatem accuntium mque laudantium perspiciatis unde omnis iste natuss",
+    Title = "CSE ENGINEERING",
+    Text = "I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit asnatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui",
+    HowToApply = "I must explain to you how all this a mistaken idea of ncing great explorer of the rut the is lder of human happinescias unde omnis iste natus error sit volptatem accuntium mque laudantium perspiciatis unde omnis iste natuss",
+    FeatureId = 1,
+    Certification = "I must explain to you how all this a mistaken idea of ncing great explorer of the rut the is lder of human happinescias unde omnis iste natus error sit volptatem accuntium mque laudantium perspiciatis unde omnis iste natuss",
+    Image = "course1.jpg",
+    CategoryId = 1
+})
+);
             modelBuilder.Entity<Post>(e => e.HasData(
                new Post
                {
@@ -92,8 +131,8 @@ namespace EduHome.DataContext
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                    "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                   CategoryId = 1,
-                   Image = "blog8.jpg"
+                   Image = "blog8.jpg",
+                   CourseId = 1
                },
               new Post
               {
@@ -104,8 +143,8 @@ namespace EduHome.DataContext
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                    "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                  CategoryId = 2,
-                  Image = "blog2.jpg"
+                  Image = "blog2.jpg",
+                  CourseId = 1
               },
               new Post
               {
@@ -116,8 +155,8 @@ namespace EduHome.DataContext
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                    "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                  CategoryId = 1,
-                  Image = "blog5.jpg"
+                  Image = "blog5.jpg",
+                  CourseId = 1
               },
               new Post
               {
@@ -128,8 +167,8 @@ namespace EduHome.DataContext
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                    "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                    "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                  CategoryId = 3,
-                  Image = "blog7.jpg"
+                  Image = "blog7.jpg",
+                  CourseId = 1
 
               }
                )
@@ -139,9 +178,9 @@ namespace EduHome.DataContext
                new Speaker
                {
                    Id = 1,
-                  Fullname = "Anthony Smith" ,
-                  Professional = "CEO, Hastech",
-                  Image = "speaker1.jpg"
+                   Fullname = "Anthony Smith",
+                   Professional = "CEO, Hastech",
+                   Image = "speaker1.jpg"
                },
                new Speaker
                {
@@ -156,12 +195,12 @@ namespace EduHome.DataContext
                new TimeInterval
                {
                    Id = 1,
-                  Name = "9:30am - 4:45pm"
+                   Name = "9:30am - 4:45pm"
                },
                new TimeInterval
                {
                    Id = 2,
-                   Name = " 9:30am - 4:45pm"                   
+                   Name = " 9:30am - 4:45pm"
                })
            );
             modelBuilder.Entity<Event>(e => e.HasData(
@@ -174,10 +213,10 @@ namespace EduHome.DataContext
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                   "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                  CategoryId = 1,
                   Image = "event1.jpg",
                   TimeIntervalId = 1,
-                  Address = "Cristal Centre, 254 New Yourk"
+                  Address = "Cristal Centre, 254 New Yourk",
+                  CourseId = 1
 
               },
              new Event
@@ -189,10 +228,10 @@ namespace EduHome.DataContext
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                   "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                 CategoryId = 1,
                  Image = "event2.jpg",
                  TimeIntervalId = 2,
-                 Address = "Cristal Centre, 254 New Yourk"
+                 Address = "Cristal Centre, 254 New Yourk",
+                 CourseId = 1
              },
              new Event
              {
@@ -203,10 +242,10 @@ namespace EduHome.DataContext
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                   "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                 CategoryId = 1,
                  Image = "event3.jpg",
                  TimeIntervalId = 1,
-                 Address = "Cristal Centre, 254 New Yourk"
+                 Address = "Cristal Centre, 254 New Yourk",
+                 CourseId = 1
              },
              new Event
              {
@@ -217,10 +256,10 @@ namespace EduHome.DataContext
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam</p>" +
                   "<p class='quote'>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque la udantium, totam rem aperiam</p>" +
                   "<p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human haness pcias unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque sa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo emo enim ipsam</p>",
-                 CategoryId = 3,
                  Image = "event5.jpg",
                  TimeIntervalId = 2,
-                 Address = "Cristal Centre, 254 New Yourk"
+                 Address = "Cristal Centre, 254 New Yourk",
+                 CourseId = 1
 
              }
               )
@@ -263,12 +302,26 @@ namespace EduHome.DataContext
                   SpeakerId = 2
               })
           );
+
+            modelBuilder.Entity<Footer>(e => e.HasData(
+             new Footer
+             {
+                 Id = 1,
+                 Address = "City, Roadno 785 New York",
+                 Copyright = "<p>Copyright © <a href='#' target='_blank'>HasTech</a> 2017. All Right Reserved By Hastech.</p>",
+                 Email = "info@eduhome.com",
+                 Logo = "footer-logo.png",
+                 Slogan = "I must explain to you how all this mistaken idea of denoung pleure and praising pain was born and give you a coete account of the system.",
+                 website = "www.eduhome.com"
+             })
+         );
+
             modelBuilder.Entity<Phone>(e => e.HasData(
               new Phone
               {
                   Id = 1,
-                 PhoneNumber = "+880 548 986 898 87",
-                 FooterId = 1
+                  PhoneNumber = "+880 548 986 898 87",
+                  FooterId = 1
               },
               new Phone
               {
@@ -292,7 +345,7 @@ namespace EduHome.DataContext
                 Name = "pinterest",
                 Icon = "zmdi zmdi-pinterest",
                 Link = "pinterest.com",
-                 FooterId = 1
+                FooterId = 1
             },
             new SocialLink
             {
@@ -300,7 +353,7 @@ namespace EduHome.DataContext
                 Name = "vimeo",
                 Icon = "zmdi zmdi-vimeo",
                 Link = "vimeo.com",
-                 FooterId = 1
+                FooterId = 1
             },
             new SocialLink
             {
@@ -312,18 +365,7 @@ namespace EduHome.DataContext
             })
          );
 
-            modelBuilder.Entity<Footer>(e => e.HasData(
-              new Footer
-              {
-                  Id = 1,
-                  Address = "City, Roadno 785 New York",
-                  Copyright = "<p>Copyright © <a href='#' target='_blank'>HasTech</a> 2017. All Right Reserved By Hastech.</p>",
-                  Email = "info@eduhome.com",
-                  Logo = "footer-logo.png",
-                  Slogan = "I must explain to you how all this mistaken idea of denoung pleure and praising pain was born and give you a coete account of the system.",
-                  website = "www.eduhome.com"
-              })
-          );
+
             modelBuilder.Entity<Contact>(e => e.HasData(
      new Contact
      {
@@ -343,10 +385,10 @@ namespace EduHome.DataContext
           new Address
           {
               Id = 1,
-             City = "New Yourk City",
-             Street = "135, First Lane, City Street",
-             Image = "contact1.png",
-             ContactId = 1
+              City = "New Yourk City",
+              Street = "135, First Lane, City Street",
+              Image = "contact1.png",
+              ContactId = 1
           },
           new Address
           {
@@ -357,7 +399,8 @@ namespace EduHome.DataContext
               ContactId = 1
           })
       );
-        
+
+
 
         }
     }

@@ -29,13 +29,13 @@
                         <label asp-for="Address.Street">Street</label>
                         <input asp-for="Address.Street" class="form-control" />
                         <span asp-validation-for="Address.Street"></span>
-                    </div>                  
+                    </div>
                     <div class="mb-3">
                         <label asp-for="Address.Photo">Image</label>
                         <img src="~/img/contact/@Model.Address.Image" width="50" />
                         <input asp-for="Address.Photo" class="form-control" accept="image/*" />
                         <span asp-validation-for="Address.Photo"></span>
-                    </div>                  
+                    </div>
                     <button type="submit" class="btn btn-primary" asp-route-image="@Model.Address.Image">Submit</button>
                 </form>
             </div>

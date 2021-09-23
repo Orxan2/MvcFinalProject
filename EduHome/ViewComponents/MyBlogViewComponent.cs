@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduHome.ViewComponents
 {
-    public class MyBlogViewComponent:ViewComponent
+    public class MyBlogViewComponent : ViewComponent
     {
         public EduhomeDbContext _db;
         public MyBlogViewComponent(EduhomeDbContext db)
@@ -19,21 +19,19 @@ namespace EduHome.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int quantity)
         {
-            int pag = 0; 
+            int pag = 0;
             if (ViewBag.Pagination != null && ViewBag.Pagination != 0)
             {
-               pag = (ViewBag.Pagination-1) * quantity;
+                pag = (ViewBag.Pagination - 1) * quantity;
             }
-            
+
 
             PostVM postVM = new PostVM
             {
-                 Posts = _db.Posts.Include(p => p.Category).Include(p=>p.PostMessages).Skip(pag).Take(quantity).ToList()               
+                Posts = _db.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).Skip(pag).Take(quantity).ToList()
             };
 
             return View(await Task.FromResult(postVM));
         }
     }
-
- 
 }

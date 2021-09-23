@@ -2,7 +2,6 @@
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +15,7 @@ namespace EduHome.Areas.Admin.Controllers
 {
     [Area("admin")]
     public class PostController : Controller
-    {
+    {       
         public EduhomeDbContext _context { get; }
         public IWebHostEnvironment _env { get; }
         public PostController(EduhomeDbContext context, IWebHostEnvironment env)
@@ -28,7 +27,7 @@ namespace EduHome.Areas.Admin.Controllers
         {
             PostVM postVM = new PostVM
             {
-                Posts = _context.Posts.Include(p => p.Category).ToList()
+                Posts = _context.Posts.Include(p => p.Course).ThenInclude(p => p.Category).Include(p => p.PostMessages).ToList()
             };
             return View(postVM);
         }
@@ -39,7 +38,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Post post = _context.Posts.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
+            Post post = _context.Posts.Include(p => p.Course).ThenInclude(p => p.Category).Include(p => p.PostMessages).FirstOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return BadRequest();
@@ -61,7 +60,8 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Post post = _context.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id);
+            Post post = _context.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
+                Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return BadRequest();
@@ -71,7 +71,11 @@ namespace EduHome.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
-            PostCategoryVM postCategory = new PostCategoryVM { Categories = _context.Categories.ToList() };
+            PostCategoryVM postCategory = new PostCategoryVM
+            {
+                Categories = _context.Categories.Include(c => c.Courses).
+                ThenInclude(c => c.Category).ToList()
+            };
             return View(postCategory);
         }
 
@@ -101,7 +105,7 @@ namespace EduHome.Areas.Admin.Controllers
                 postCategory.Post.Photo.CopyTo(file);
             }
             postCategory.Post.Image = filename;
-            postCategory.Post.Category = _context.Categories.FirstOrDefault(c=>c.Name == postCategory.Category);
+            postCategory.Post.Course.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
 
             _context.Posts.Add(postCategory.Post);
             _context.SaveChanges();
@@ -119,13 +123,14 @@ namespace EduHome.Areas.Admin.Controllers
 
             PostCategoryVM postCategory = new PostCategoryVM
             {
-                Post = _context.Posts.Include(p => p.Category).Include(p => p.PostMessages).Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
-                Categories = _context.Categories.ToList()               
+                Post = _context.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
+                Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
+                Categories = _context.Categories.Include(c => c.Courses).ThenInclude(p => p.Category).ToList()
             };
             if (postCategory.Post == null)
             {
                 return BadRequest();
-            }        
+            }
 
             return View(postCategory);
         }
@@ -142,7 +147,7 @@ namespace EduHome.Areas.Admin.Controllers
             //if user don't choose image program enter here
             if (postCategory.Post.Photo == null)
             {
-                postCategory.Post.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
+                postCategory.Post.Course.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
                 postCategory.Post.Image = postCategory.Image;
 
                 ModelState["Post.Photo"].ValidationState = ModelValidationState.Valid;
@@ -189,13 +194,13 @@ namespace EduHome.Areas.Admin.Controllers
 
             //new image and category initiliazing to Post class
             postCategory.Post.Image = filename;
-            postCategory.Post.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
+            postCategory.Post.Course.Category = _context.Categories.FirstOrDefault(c => c.Name == postCategory.Category);
 
 
             if (!ModelState.IsValid)
             {
                 return View(postCategory.Post);
-            }            
+            }
             _context.Posts.Update(postCategory.Post);
             _context.SaveChanges();
 

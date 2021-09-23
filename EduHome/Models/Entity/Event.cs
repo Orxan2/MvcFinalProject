@@ -24,11 +24,11 @@ namespace EduHome.Models.Entity
         public string Address { get; set; }
         [DataType(dataType: DataType.Text)]
         public string Details { get; set; }
-        public bool IsDeleted { get; set; }
-        public Category Category { get; set; }
-        public int? CategoryId { get; set; }
+        public bool IsDeleted { get; set; }       
         public TimeInterval TimeInterval { get; set; }
         public int? TimeIntervalId { get; set; }
+        public Course Course { get; set; }
+        public int? CourseId { get; set; }
         public List<PostMessage> PostMessages { get; set; }
         public List<EventSpeaker> EventSpeakers { get; set; }
     }

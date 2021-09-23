@@ -1,6 +1,5 @@
 ﻿using EduHome.DataContext;
 using EduHome.Models.Entity;
-using EduHome.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

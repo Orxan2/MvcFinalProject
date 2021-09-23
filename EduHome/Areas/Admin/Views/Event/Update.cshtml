@@ -40,11 +40,11 @@
                         <span asp-validation-for="Event.ByWhom"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="TimeInterval">TimeInterval</label>
-                        <select asp-for="TimeInterval" class="form-control">
+                        <label asp-for="Event.TimeIntervalId">TimeInterval</label>
+                        <select asp-for="Event.TimeIntervalId" class="form-control">
                             @foreach (TimeInterval item in Model.TimeIntervals)
                             {
-                                <option>@item.Name</option>
+                                <option value="@item.Id">@item.Name</option>
                             }
                         </select>
                     </div>
@@ -55,11 +55,11 @@
                         <span asp-validation-for="Event.Photo"></span>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="Category">Category</label>
-                        <select asp-for="Category" class="form-control">
-                            @foreach (Category item in Model.Categories)
+                        <label asp-for="Event.CourseId">Course</label>
+                        <select asp-for="Event.CourseId" class="form-control">
+                            @foreach (Course item in Model.Courses)
                             {
-                                <option>@item.Name</option>
+                                <option value="@item.Id">@item.Title</option>
                             }
                         </select>
                     </div>

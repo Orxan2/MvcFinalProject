@@ -8,7 +8,7 @@ namespace EduHome.ViewModels
 {
     public class ContactVM
     {
-        public Contact Contact { get; set; }      
+        public Contact Contact { get; set; }
         public List<PostMessage> PostMessages { get; set; }
         public PostMessage PostMessage { get; set; }
         public List<Address> Addresses { get; set; }

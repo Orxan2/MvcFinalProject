@@ -1,0 +1,25 @@
+﻿@model List<Course>
+@{
+    Layout = null;
+}
+
+@foreach (var course in Model)
+{
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="single-course mb-70">
+            <div class="course-img">
+                <a href="course-details.html">
+                    <img src="~/img/course/@course.Image" alt="course">
+                    <div class="course-hover">
+                        <i class="fa fa-link"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="course-content">
+                <h3><a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">@course.Title.ToUpper()</a></h3>
+                <p>@(course.Text.Length > 20 ? course.Text.Substring(0, 100) : course.Text)t</p>
+                <a class="default-btn" asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">read more</a>
+            </div>
+        </div>
+    </div>
+}

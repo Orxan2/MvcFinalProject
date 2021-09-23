@@ -17,7 +17,7 @@
                     <tr>
                         <th class="small-cell">
                         </th>
-                        
+
                         <th class="medium-cell">
                         </th>
                         <th>
@@ -31,10 +31,10 @@
                     {
                         <tr>
                             <td class="clickable v-align-middle">
-                                <div class="check-success">                                  
+                                <div class="check-success">
                                     <a asp-action="MessageDelete" asp-route-id="@message.Id" class="btn btn-danger-dark p-2 d-inline-block"><i class="fa fa-trash-o"></i></a>
                                 </div>
-                            </td>                           
+                            </td>
                             <td class="clickable v-align-middle">
                                 <p class="py-2">@message.Name</p>
                             </td>
@@ -45,7 +45,7 @@
                                 <p class="muted py-2">Yesterday</p>
                             </td>
                         </tr>
-                    }                   
+                    }
 
                 </tbody>
             </table>
@@ -54,13 +54,13 @@
     </div>
 
     <div class="admin-bar" id="quick-access">
-            <div class="admin-bar-inner">
-                <button class="btn btn-danger btn-add" type="button"><i class="icon-trash"></i> Move to trash</button>
-                <button class="btn btn-white btn-cancel" type="button">Cancel</button>
-            </div>
+        <div class="admin-bar-inner">
+            <button class="btn btn-danger btn-add" type="button"><i class="icon-trash"></i> Move to trash</button>
+            <button class="btn btn-white btn-cancel" type="button">Cancel</button>
         </div>
+    </div>
 </div>
 
-@section scripts{ 
-<script src="~/admin/assets/js/email_comman.js"></script>
+@section scripts{
+    <script src="~/admin/assets/js/email_comman.js"></script>
 } 
