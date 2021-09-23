@@ -1,0 +1,25 @@
+﻿@model About
+@{
+    Layout = null;
+}
+
+<!-- About Start -->
+<div class="about-area pt-145 pb-155">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="about-content">
+                    @Html.Raw(Model.Title)
+                    <p>@Model.Text</p>
+                    <a class="default-btn" asp-controller="Courses" asp-action="Index">view courses</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="about-img">
+                    <img src="img/about/@Model.Image" alt="about">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->

@@ -13,8 +13,9 @@ namespace EduHome.DataContext
         {
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }        
         public DbSet<Feature> Features { get; set; }
+        public DbSet<About> About { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Contact> Contact { get; set; }
@@ -365,7 +366,17 @@ new Course
 
              })
          );
-      
+
+            modelBuilder.Entity<About>(e => e.HasData(
+            new About
+            {
+                Id = 1,
+                Title = "<h2>WELCOME TO <span>EDUHOME</span></h2>",
+                Text = "I must explain to you how all this mistaken idea of denouncing pleure and prsing pain was born and I will give you a complete account of the system, and expound the actual teachings  the master-builder of humanit happiness",
+                Image = "about.png"
+            })
+        );
+
             modelBuilder.Entity<Contact>(e => e.HasData(
      new Contact
      {
