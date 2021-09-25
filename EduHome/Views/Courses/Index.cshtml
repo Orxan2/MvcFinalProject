@@ -1,4 +1,4 @@
-﻿@model List<Course>
+﻿@model CourseSearchingVM
 @{
     ViewData["Title"] = "Index";
 }
@@ -12,15 +12,15 @@
                     <h3>search courses</h3>
                 </div>
                 <div class="course-form">
-                    <form id="search" action="#">
-                        <input type="search" placeholder="Search..." name="search" />
+                    <form id="search" asp-action="Search" method="post" >
+                        <input type="text" name="search" placeholder="Type here Course Title..." />
                         <button type="submit">search</button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="row">
-            @await Component.InvokeAsync("Course", 9)
+            @await Component.InvokeAsync("Course", Model)
         </div>
     </div>
 </div>

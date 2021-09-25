@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EduHome.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,11 @@ namespace EduHome.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            CourseSearchingVM course = new CourseSearchingVM
+            {
+                quantity = 3
+            };
+            return View(course);
         }
     }
 }

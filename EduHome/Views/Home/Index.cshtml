@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CourseSearchingVM
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -115,7 +116,7 @@
             </div>
         </div>
         <div class="row">
-            @await Component.InvokeAsync("Course", 3)
+            @await Component.InvokeAsync("Course", Model)
         </div>
     </div>
 </div>

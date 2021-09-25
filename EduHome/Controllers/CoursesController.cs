@@ -1,5 +1,6 @@
 ﻿using EduHome.DataContext;
 using EduHome.Models.Entity;
+using EduHome.ViewComponents;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +16,31 @@ namespace EduHome.Controllers
         private readonly EduhomeDbContext _db;
         public CoursesController(EduhomeDbContext db)
         {
-            _db = db;
+            _db = db; 
         }
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            List<Course> courses = _db.Courses.Include(c => c.Category).Include(c => c.Posts).Include(c => c.Events).Include(c => c.Feature).ToList();
-
-            return View(courses);
+            CourseSearchingVM course = new CourseSearchingVM
+            {
+                quantity = 9,
+                courseTitle = search
+            };
+            return View(course);
         }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Search(string search)
+        {                     
+            
+            CourseSearchingVM course = new CourseSearchingVM
+            {
+                quantity = 9,
+                courseTitle = search
+            };
+            return View(nameof(Index), course);
+        }
+
 
         public IActionResult Details(int? id)
         {

@@ -1,5 +1,6 @@
 ﻿using EduHome.DataContext;
 using EduHome.Models.Entity;
+using EduHome.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,11 +18,15 @@ namespace EduHome.ViewComponents
             _db = db;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int quantity)
+        public async Task<IViewComponentResult> InvokeAsync(CourseSearchingVM courseSearching)
         {
             List<Course> courses = _db.Courses.Include(c => c.Feature).Include(c => c.Category).Include(c => c.Posts).Include(c => c.Events).
-                OrderByDescending(c => c.Id).Take(quantity).ToList();
+                Where(c=>c.IsDeleted == false).Take(courseSearching.quantity).OrderByDescending(c => c.Id).ToList();
 
+            if (courseSearching.courseTitle!= null)
+            {
+                courses = courses.Where(c => c.Title.Contains(courseSearching.courseTitle)).ToList();
+            }        
             return View(await Task.FromResult(courses));
         }
     }
