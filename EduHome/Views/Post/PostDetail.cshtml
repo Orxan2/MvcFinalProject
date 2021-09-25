@@ -23,7 +23,7 @@
                     <div class="reply-area">
                         <h3>LEAVE A REPLY</h3>
                         <ul class="list-group border-0 my-4" id="addHere">
-                            
+
                             @foreach (var message in Model.PostMessages)
                             {
                                 <li class="list-group-item list-group-item-info border-0">
@@ -67,8 +67,3 @@
     </div>
 </div>
 <!-- Blog End -->
-
-@section validate {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-};

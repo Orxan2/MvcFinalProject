@@ -5,10 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210925151800_AppUserAdded.cs" />
+    <Compile Remove="Migrations\20210925151800_AppUserAdded.Designer.cs" />
+    <Compile Remove="Migrations\20210925162451_AppUserUpdateded.cs" />
+    <Compile Remove="Migrations\20210925162451_AppUserUpdateded.Designer.cs" />
+    <Compile Remove="Migrations\20210925162734_AppUserUpdated.cs" />
+    <Compile Remove="Migrations\20210925162734_AppUserUpdated.Designer.cs" />
+    <Compile Remove="Migrations\20210925164527_AppUserUpdated.cs" />
+    <Compile Remove="Migrations\20210925164527_AppUserUpdated.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\admin\assets\plugins\Multi-Select-Plugin-jQuery-MagicSuggest\magicsuggest.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.18">
       <PrivateAssets>all</PrivateAssets>

@@ -55,7 +55,7 @@ namespace EduHome.Controllers
 
         public IActionResult MessageLoad(int? id,string name, string email, string subject, string message)
         {
-            if (id == null || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(subject) || 
+            if (id == null || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(subject) ||
                 string.IsNullOrEmpty(message))
             {
                 return View();

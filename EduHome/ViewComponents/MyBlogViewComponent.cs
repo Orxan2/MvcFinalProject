@@ -28,7 +28,8 @@ namespace EduHome.ViewComponents
 
             PostVM postVM = new PostVM
             {
-                Posts = _db.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).Skip(pag).Take(quantity).ToList()
+                Posts = _db.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
+                Where(p=>p.IsDeleted == false ).Skip(pag).Take(quantity).ToList()
             };
 
             return View(await Task.FromResult(postVM));

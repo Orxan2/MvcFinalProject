@@ -7,7 +7,7 @@
 
     @foreach (var post in Model.Posts)
     {
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12 my-4">
             <div class="single-blog">
                 <div class="blog-img">
                     <a href="blog-details.html"><img src="~/img/blog/@post.Image" alt="blog"></a>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="blog-content">
                     <div class="blog-top">
-                        <p>@post.ByWhom  /  @post.Date  /  <i class="fa fa-comments-o"></i> @post.PostMessages.Count()</p>
+                        <p>@post.ByWhom  /  @post.Date  /  <i class="fa fa-comments-o"></i> @post.PostMessages.Where(pm=>pm.IsDeleted == false).Count()</p>
                     </div>
                     <div class="blog-bottom">
                         <h2><a href="blog-details.html">@post.Title</a></h2>

@@ -1,4 +1,6 @@
 ﻿using EduHome.Models.Entity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EduHome.DataContext
 {
-    public class EduhomeDbContext:DbContext
+    public class EduhomeDbContext:IdentityDbContext<AppUser,IdentityRole,string>
     {
         public EduhomeDbContext(DbContextOptions<EduhomeDbContext> options):base(options)
         {
@@ -32,6 +34,7 @@ namespace EduHome.DataContext
         public DbSet<Teacher> Teachers { get; set; }     
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Header> Header { get; set; }
+        //public DbSet<AppUser> AppUsers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

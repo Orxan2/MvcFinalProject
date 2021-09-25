@@ -1,7 +1,9 @@
 using EduHome.DataContext;
+using EduHome.Models.Entity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,12 @@ namespace EduHome
         {
             services.AddControllersWithViews();
             services.AddDbContext<EduhomeDbContext>(opt=>opt.UseSqlServer(_config.GetConnectionString("MyDatabase")));
+            services.AddIdentity<AppUser,IdentityRole>(opt=>
+            {
+                opt.SignIn.RequireConfirmedEmail = true;
+                opt.SignIn.RequireConfirmedPhoneNumber = true;                
+                //opt.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<EduhomeDbContext>().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +46,8 @@ namespace EduHome
 
             app.UseRouting();
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
