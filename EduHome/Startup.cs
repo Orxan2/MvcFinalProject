@@ -30,8 +30,8 @@ namespace EduHome
             services.AddDbContext<EduhomeDbContext>(opt=>opt.UseSqlServer(_config.GetConnectionString("MyDatabase")));
             services.AddIdentity<AppUser,IdentityRole>(opt=>
             {
-                opt.SignIn.RequireConfirmedEmail = true;
-                opt.SignIn.RequireConfirmedPhoneNumber = true;                
+                //opt.SignIn.RequireConfirmedEmail = true;
+                //opt.SignIn.RequireConfirmedPhoneNumber = true;                
                 //opt.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<EduhomeDbContext>().AddDefaultTokenProviders();
         }
