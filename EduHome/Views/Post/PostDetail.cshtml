@@ -22,7 +22,8 @@
                     </div>
                     <div class="reply-area">
                         <h3>LEAVE A REPLY</h3>
-                        <ul class="list-group border-0 my-4">
+                        <ul class="list-group border-0 my-4" id="addHere">
+                            
                             @foreach (var message in Model.PostMessages)
                             {
                                 <li class="list-group-item list-group-item-info border-0">
@@ -33,28 +34,29 @@
                         </ul>
                         <form method="post">
                             <div class="row">
+                                <input type="hidden" value="@Model.Post.Id" id="postId" class="form-control" />
                                 <div class="col-md-12 my-3">
                                     <label asp-for="PostMessage.Name">Name</label>
-                                    <input asp-for="PostMessage.Name" class="form-control" />
+                                    <input asp-for="PostMessage.Name" id="name" class="form-control" />
                                     <span asp-validation-for="PostMessage.Name" class="text-danger mb-1"></span>
                                 </div>
                                 <div class="col-md-12 my-3">
                                     <label asp-for="PostMessage.Email">Email</label>
-                                    <input asp-for="PostMessage.Email" class="form-control mb-1" />
+                                    <input asp-for="PostMessage.Email" id="email" class="form-control mb-1" />
                                     <span asp-validation-for="PostMessage.Email" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-12 my-3">
                                     <label asp-for="PostMessage.Subject">Subject</label>
-                                    <input asp-for="PostMessage.Subject" class="form-control mb-1" />
+                                    <input asp-for="PostMessage.Subject" id="subject" class="form-control mb-1" />
                                     <span asp-validation-for="PostMessage.Subject" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-12 my-5">
                                     <label asp-for="PostMessage.Message">Message</label>
-                                    <textarea asp-for="PostMessage.Message" class="form-control mb-1"></textarea>
+                                    <textarea asp-for="PostMessage.Message" id="message" class="form-control mb-1"></textarea>
                                     <span asp-validation-for="PostMessage.Message" class="text-danger py-1"></span>
                                 </div>
                             </div>
-                            <button type="submit" class="form-control">Send</button>
+                            <span class="btn btn-success" id="loadMessage">Send Message</span>
                         </form>
                     </div>
 
@@ -69,4 +71,4 @@
 @section validate {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-}
+};

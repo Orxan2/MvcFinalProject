@@ -28,6 +28,7 @@ namespace EduHome.Controllers
 
         public IActionResult PostDetail(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -39,59 +40,39 @@ namespace EduHome.Controllers
             {
                 return BadRequest();
             }
-
-            PostDetailVM postDetailsVM = new PostDetailVM
+           
+            PostDetailVM postDetailVM = new PostDetailVM
             {
                 Post = post,
-                PostMessages = _db.PostMessages.Include(pm => pm.Event).Include(pm=>pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
-                Where(pm => pm.PostId == id && pm.IsDeleted == false).ToList()
+                PostMessages = _db.PostMessages.Include(pm => pm.Course).Include(pm => pm.Event)
+               .Include(pm => pm.Post).Include(pm => pm.Contact).Where(pm => pm.IsDeleted == false && pm.PostId == id).ToList()
             };
 
-            return View(postDetailsVM);
+            return View(postDetailVM);
         }
 
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public IActionResult PostDetail(int? id, PostMessage postMessage)
+        
+
+        public IActionResult MessageLoad(int? id,string name, string email, string subject, string message)
         {
-            if (id == null)
+            if (id == null || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(subject) || 
+                string.IsNullOrEmpty(message))
             {
-                return NotFound();
+                return View();
             }
 
-            Post post = _db.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
-                Where(p => p.IsDeleted == false).FirstOrDefault(b => b.Id == id);
-
-            if (post == null)
+            PostMessage comment = new PostMessage
             {
-                return BadRequest();
-            }
-            if (post.Id != id)
-            {
-                return BadRequest();
-            }
-            postMessage.PostId = id;
-            PostDetailVM postDetailsVM = new PostDetailVM
-            {
-                Post = post,
-                Categories = _db.Categories.Include(c => c.Courses).ThenInclude(c => c.Category).ToList(),
-                LatestPosts = _db.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
-                Where(p => p.IsDeleted == false).OrderByDescending(p => p.Id).Take(3).ToList(),
-                PostMessages = _db.PostMessages.Include(pm => pm.Event).Include(pm => pm.Post).Where(pm => pm.PostId == id).ToList(),
-                PostMessage = postMessage
+                Name = name,
+                Email = email,
+                Message = message,
+                Subject = subject
             };
-
-            if (!ModelState.IsValid)
-            {
-                return View(postDetailsVM);
-            }
-
-            postDetailsVM.PostMessages.Add(postMessage);
-            _db.Add(postMessage);
+            comment.PostId = id;
+            _db.PostMessages.Add(comment);
             _db.SaveChanges();
-
-
-            return View(postDetailsVM);
+            
+            return PartialView("_MessageLoad", comment);
         }
     }
 }
