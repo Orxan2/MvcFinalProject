@@ -248,15 +248,17 @@
                         <a href="widgets.html"> <i class="material-icons">panorama_horizontal</i> <span class="title">Widgets</span> <span class="label label-important bubble-only pull-right "></span></a>
                     </li>
                     <li>
-                        <a href="email.html">
-                            <i class="material-icons">email</i> <span class="title">Email</span> <span class=" badge badge-disable pull-right ">203</span>
-                        </a>
+                        <a href="javascript:;"> <i class="material-icons">invert_colors</i> <span class="title">Course</span><span class=" arrow"></span></a>
+                        <ul class="sub-menu">
+                            <li> <a asp-controller="Course" asp-action="Index">Course's Operations</a> </li>
+                            <li> <a asp-controller="Course" asp-action="Comments">Course's Comments</a> </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="javascript:;"> <i class="material-icons">invert_colors</i> <span class="title">Blog</span><span class=" arrow"></span></a>
                         <ul class="sub-menu">
-                            <li> <a asp-controller="Post" asp-action="Index">Blog Operations</a> </li>
-                            <li> <a asp-controller="Post" asp-action="Comments">Comments</a> </li>
+                            <li> <a asp-controller="Post" asp-action="Index">Blog's Operations</a> </li>
+                            <li> <a asp-controller="Post" asp-action="Comments">Blog's Comments</a> </li>
                         </ul>
                     </li>
                     <li>
@@ -734,6 +736,7 @@
     <script src="~/admin/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
     <script src="~/admin/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
     @RenderSection("scripts", false)
+    @RenderSection("validate", false)
 </body>
 
 <!-- Mirrored from webarch.revox.io/3.0/html/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Oct 2020 17:27:35 GMT -->

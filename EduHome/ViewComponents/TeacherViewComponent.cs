@@ -19,7 +19,7 @@ namespace EduHome.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int quantity = 4)
         {
-            List<Teacher> teachers = _db.Teachers.Include(t => t.Course).ThenInclude(t => t.Category).Where(t=>t.IsDeleted == false).
+            List<Teacher> teachers = _db.Teachers.Include(t => t.Course).ThenInclude(c=>c.Category).Where(t=>t.IsDeleted == false).
                 OrderByDescending(c => c.Id).Take(quantity).ToList();
 
             return View(await Task.FromResult(teachers));

@@ -1,0 +1,104 @@
+﻿@model CourseVM
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="content sm-gutter">
+    <div class="page-title">
+        <h1>Course Create</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple">
+                <div class="grid-body no-border">
+                    <form enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <input type="hidden" asp-for="Course.Id" />
+
+                        <div class="mb-3">
+                            <label asp-for="Course.Title">Title</label>
+                            <input asp-for="Course.Title" class="form-control" />
+                            <span asp-validation-for="Course.Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Text">Text</label>
+                            <input asp-for="Course.Text" class="form-control" />
+                            <span asp-validation-for="Course.Text" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.AboutCourse">About Course</label>
+                            <input asp-for="Course.AboutCourse" class="form-control" />
+                            <span asp-validation-for="Course.AboutCourse" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.HowToApply">How To Apply</label>
+                            <input asp-for="Course.HowToApply" class="form-control" />
+                            <span asp-validation-for="Course.HowToApply" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Certification">Certification</label>
+                            <input asp-for="Course.Certification" class="form-control" />
+                            <span asp-validation-for="Course.Certification" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.Assesments">Assesments :</label>
+                            <input asp-for="Course.Feature.Assesments" class="form-control" />
+                            <span asp-validation-for="Course.Feature.Assesments" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.Duration">Duration :</label>
+                            <input asp-for="Course.Feature.Duration" class="form-control" />
+                            <span asp-validation-for="Course.Feature.Duration" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.Fee">Course Fee :</label>
+                            <input asp-for="Course.Feature.Fee" class="form-control" />
+                            <span asp-validation-for="Course.Feature.Fee" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.SkillLevel">Skill Level :</label>
+                            <input asp-for="Course.Feature.SkillLevel" class="form-control" />
+                            <span asp-validation-for="Course.Feature.SkillLevel" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.Language">Language :</label>
+                            <input asp-for="Course.Feature.Language" class="form-control" />
+                            <span asp-validation-for="Course.Feature.Language" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.StudentQuantity">Student Quantity :</label>
+                            <input asp-for="Course.Feature.StudentQuantity" class="form-control" />
+                            <span asp-validation-for="Course.Feature.StudentQuantity" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Feature.LessonTime">Class Duration :</label>
+                            <input asp-for="Course.Feature.LessonTime" class="form-control" />
+                            <span asp-validation-for="Course.Feature.LessonTime" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.Photo">Image</label>
+                            <input asp-for="Course.Photo" class="form-control" accept="image/*" />
+                            <span asp-validation-for="Course.Photo" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Course.CategoryId">Category</label>
+                            <select asp-for="Course.CategoryId" class="form-control">
+                                @foreach (Category item in Model.Categories)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" asp-route-image="@Model.Course.Image">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section validate {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

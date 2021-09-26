@@ -62,7 +62,7 @@ namespace EduHome.DataContext
               Property(a => a.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<PostMessage>().
-            Property(pm => pm.IsDeleted).HasDefaultValue(false);
+            Property(pm => pm.IsDeleted).HasDefaultValue(true);
 
             modelBuilder.Entity<PostMessage>().
             Property(pm => pm.IsReadable).HasDefaultValue(false);
@@ -376,8 +376,7 @@ new Course
                  Pinterest = "pinterest.com",
                  Twitter = "twitter.com",
                  Vimeo = "vimeo.com", 
-                 Image = "teacher1.jpg",
-                 CourseId = 1,
+                 Image = "teacher1.jpg"                 
 
              })
          );

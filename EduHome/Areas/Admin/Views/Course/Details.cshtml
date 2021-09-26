@@ -1,0 +1,72 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="content sm-gutter">
+    <div class="page-title">
+        <h1>Course Details</h1>
+        <a asp-action="Index" class="btn btn-success text-light"><i class="fa fa-arrow-left"></i></a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Image :</h3>
+        </div>
+        <div class="col-md-8">
+            <img src="~/img/course/@Model.Image" width="500" height="300" alt="blog-details">
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Title :</h3>
+        </div>
+        <div class="col-md-8">
+            <h3>@Model.Title</h3>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Authors :</h3>
+        </div>
+        <div class="col-md-8">
+            <ol start="1">
+                @foreach (var teacher in Model.Teachers)
+                {
+                <li class="h3 text-dark"><a class="overflow-hidden"><img src="~/img/teacher/@teacher.Image" width="50" height="50" class="rounded-circle" /></a> @teacher.Fullname</li>
+                }
+            </ol>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Created date :</h3>
+        </div>
+        <div class="col-md-8">
+            <h3>@Model.CreatedDate</h3>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Message Count</h3>
+        </div>
+        <div class="col-md-8">
+            <h3><i class="fa fa-comments-o"></i> @Model.PostMessages.Where(pm => pm.CourseId == Model.Id).Count()</h3>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Text :</h3>
+        </div>
+        <div class="col-md-8">
+            @Html.Raw(Model.Text.ToString())
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <h3 class="fw-bold text-warning">Category :</h3>
+        </div>
+        <div class="col-md-8">
+            <h3>@Model.Category.Name</h3>
+        </div>
+    </div>
+</div>

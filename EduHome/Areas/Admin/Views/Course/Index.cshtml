@@ -1,0 +1,47 @@
+﻿@model List<Course>
+@{
+    ViewData["Title"] = "Index";
+    int count = 0;
+}
+
+<div class="content sm-gutter">
+    <div class="page-title">
+        <h1>Courses</h1>
+        <a asp-action="Create" class="btn btn-success text-light"><i class="fa fa-plus-circle"></i></a>
+    </div>
+
+    <div class="row">
+        <table class="table table-hover no-more-tables">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course Fee</th>
+                    <th>Course Title</th>
+                    <th>Course Duration</th>
+                    <th>IsDeleted</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model)
+                {
+                    @(count++);
+                    <tr>
+                        <td>@count</td>
+                        <td>@course.Feature.Fee</td>
+                        <td>@course.Title</td>
+                        <td>@course.Feature.Duration</td>
+                        <td>@course.IsDeleted</td>
+                        <td>
+                            <ul class="d-flex list-unstyled">
+                                <li><a asp-action="Update" asp-route-id="@course.Id" class="btn btn-warning  @(course.IsDeleted?"disabled":"")"><i class="fa fa-pencil"></i></a></li>
+                                <li><a asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary @(course.IsDeleted?"disabled":"")"><i class="fa fa-info"></i></a></li>
+                                <li><a asp-action="DeleteOrActive" asp-route-id="@course.Id" class="btn @(course.IsDeleted?"btn-success":"btn-danger")"><i class="@(course.IsDeleted?"fa fa-check-square":"fa fa-trash-o")"></i></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

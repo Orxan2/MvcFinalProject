@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace EduHome.ViewModels
 {
-    public class PostCategoryVM
+    public class CourseVM
     {
-        public List<Course> Courses { get; set; }
+        public List<Teacher> Teachers { get; set; }
+        public List<Category> Categories { get; set; }
         public List<TimeInterval> TimeIntervals { get; set; }
-        public Post Post { get; set; }
+        public Course Course { get; set; }
         public string Image { get; set; }
-
     }
 }

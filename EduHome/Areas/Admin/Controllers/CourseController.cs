@@ -14,23 +14,23 @@ using System.Threading.Tasks;
 namespace EduHome.Areas.Admin.Controllers
 {
     [Area("admin")]
-    public class PostController : Controller
-    {       
+    public class CourseController : Controller
+    {
         public EduhomeDbContext _context { get; }
         public IWebHostEnvironment _env { get; }
-        public PostController(EduhomeDbContext context, IWebHostEnvironment env)
+        public CourseController(EduhomeDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _env = env;
         }
         public IActionResult Index()
         {
-            PostVM postVM = new PostVM
-            {
-                Posts = _context.Posts.Include(p => p.Course).ThenInclude(p => p.Category).Include(p => p.PostMessages).ToList()
-            };
-            return View(postVM);
+            List<Course> courses = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
+                 Include(c => c.Posts).Include(c => c.Teachers).Include(c => c.PostMessages).ToList();
+
+            return View(courses);
         }
+
         public IActionResult DeleteOrActive(int? id)
         {
             if (id == null)
@@ -38,20 +38,21 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Post post = _context.Posts.Include(p => p.Course).ThenInclude(p => p.Category).Include(p => p.PostMessages).FirstOrDefault(p => p.Id == id);
-            if (post == null)
+            Course course = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
+                 Include(c => c.Posts).Include(c => c.Teachers).Include(c => c.PostMessages).FirstOrDefault(c => c.Id == id);
+            if (course == null)
             {
                 return BadRequest();
             }
 
-            if (post.IsDeleted)
-                post.IsDeleted = false;
+            if (course.IsDeleted)
+                course.IsDeleted = false;
             else
-                post.IsDeleted = true;
+                course.IsDeleted = true;
 
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index), post);
+            return RedirectToAction(nameof(Index), course);
         }
         public IActionResult Details(int? id)
         {
@@ -60,58 +61,55 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Post post = _context.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
-                Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id);
-            if (post == null)
+            Course course = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
+                  Include(c => c.Posts).Include(c => c.Teachers).Include(c => c.PostMessages).FirstOrDefault(c => c.Id == id);
+            if (course == null)
             {
                 return BadRequest();
             }
 
-            return View(post);
+            return View(course);
         }
         public IActionResult Create()
         {
-            PostCategoryVM postCategory = new PostCategoryVM
+            CourseVM courseVM = new CourseVM
             {
-                Courses = _context.Courses.Include(c => c.Category).
-                Include(c => c.Feature).Include(c=>c.Posts).Include(c=>c.Events).ToList()
+                Categories = _context.Categories.Include(c => c.Courses).ToList()
             };
-            return View(postCategory);
+            return View(courseVM);
         }
-
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Create(PostCategoryVM postCategory)
+        public IActionResult Create(CourseVM courseVM)
         {
             if (!ModelState.IsValid)
             {
-                return View(postCategory.Post);
+                return View(courseVM.Course);
             }
-            if (!postCategory.Post.Photo.ContentType.Contains("image"))
+            if (!courseVM.Course.Photo.ContentType.Contains("image"))
             {
                 return NotFound();
             }
-            if (postCategory.Post.Photo.Length / 1024 > 3000)
+            if (courseVM.Course.Photo.Length / 1024 > 3000)
             {
                 return NotFound();
             }
 
-            string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
+            string filename = Guid.NewGuid().ToString() + '-' + courseVM.Course.Photo.FileName;
             string environment = _env.WebRootPath;
-            string newSlider = Path.Combine(environment, "img", "blog", filename);
+            string newSlider = Path.Combine(environment, "img", "course", filename);
             using (FileStream file = new FileStream(newSlider, FileMode.Create))
             {
-                postCategory.Post.Photo.CopyTo(file);
+                courseVM.Course.Photo.CopyTo(file);
             }
-            postCategory.Post.Image = filename;
+            courseVM.Course.Image = filename;
 
-            _context.Posts.Add(postCategory.Post);
+            _context.Courses.Add(courseVM.Course);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index), postCategory);
+            return RedirectToAction(nameof(Index), courseVM);
         }
-
         public IActionResult Update(int? id)
         {
             if (id == null)
@@ -119,24 +117,23 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            PostCategoryVM postCategory = new PostCategoryVM
+            CourseVM courseVM = new CourseVM
             {
-                Courses = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
-                Include(c => c.Posts).ToList(),
-                Post = _context.Posts.Include(p => p.Course).ThenInclude(c => c.Category).Include(p => p.PostMessages).
-                Where(p => p.IsDeleted == false).FirstOrDefault(p => p.Id == id),
+                Categories = _context.Categories.Include(c => c.Courses).ToList(),
+                Course = _context.Courses.Include(c => c.Category).Include(c => c.PostMessages).Include(c => c.Posts).
+                Include(c => c.Events).Include(c => c.Feature).Include(c => c.Teachers).FirstOrDefault(c=>c.Id == id)
             };
-            if (postCategory.Post == null)
+            if (courseVM.Course == null)
             {
                 return BadRequest();
             }
 
-            return View(postCategory);
+            return View(courseVM);
         }
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Update(int? id, PostCategoryVM postCategory)
+        public IActionResult Update(int? id, CourseVM courseVM)
         {
             if (id == null)
             {
@@ -144,38 +141,38 @@ namespace EduHome.Areas.Admin.Controllers
             }
 
             //if user don't choose image program enter here
-            if (postCategory.Post.Photo == null)
+            if (courseVM.Course.Photo == null)
             {
-                postCategory.Post.Image = postCategory.Image;
+                courseVM.Course.Image = courseVM.Image;
 
-                ModelState["Post.Photo"].ValidationState = ModelValidationState.Valid;
+                ModelState["Course.Photo"].ValidationState = ModelValidationState.Valid;
                 if (!ModelState.IsValid)
                 {
-                    return View(postCategory);
+                    return View(courseVM);
                 }
-                _context.Posts.Update(postCategory.Post);
+                _context.Courses.Update(courseVM.Course);
                 _context.SaveChanges();
 
-                return RedirectToAction(nameof(Index), postCategory);
+                return RedirectToAction(nameof(Index), courseVM);
             }
 
-            if (id != postCategory.Post.Id)
+            if (id != courseVM.Course.Id)
             {
                 return NotFound();
             }
 
-            if (!postCategory.Post.Photo.ContentType.Contains("image"))
+            if (!courseVM.Course.Photo.ContentType.Contains("image"))
             {
                 return NotFound();
             }
-            if (postCategory.Post.Photo.Length / 1024 > 3000)
+            if (courseVM.Course.Photo.Length / 1024 > 3000)
             {
                 return NotFound();
             }
 
             //removing old image from local folder
             string environment = _env.WebRootPath;
-            string folderPath = Path.Combine(environment, "img", "blog", postCategory.Image);
+            string folderPath = Path.Combine(environment, "img", "course", courseVM.Image);
             FileInfo oldFile = new FileInfo(folderPath);
             if (System.IO.File.Exists(folderPath))
             {
@@ -183,32 +180,31 @@ namespace EduHome.Areas.Admin.Controllers
             };
 
             //coping new image in local folder
-            string filename = Guid.NewGuid().ToString() + '-' + postCategory.Post.Photo.FileName;
-            string newSlider = Path.Combine(environment, "img", "blog", filename);
+            string filename = Guid.NewGuid().ToString() + '-' + courseVM.Course.Photo.FileName;
+            string newSlider = Path.Combine(environment, "img", "course", filename);
             using (FileStream newFile = new FileStream(newSlider, FileMode.Create))
             {
-                postCategory.Post.Photo.CopyTo(newFile);
+                courseVM.Course.Photo.CopyTo(newFile);
             }
 
             //new image and category initiliazing to Post class
-            postCategory.Post.Image = filename;
+            courseVM.Course.Image = filename;
 
 
             if (!ModelState.IsValid)
             {
-                return View(postCategory.Post);
+                return View(courseVM.Course);
             }
-            _context.Posts.Update(postCategory.Post);
+            _context.Courses.Update(courseVM.Course);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index), postCategory);
+            return RedirectToAction(nameof(Index), courseVM);
         }
-
 
         public IActionResult Comments()
         {
-            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm=>pm.Course).Include(pm => pm.Post).
-                Include(pm => pm.Event).Where(pm => pm.PostId != null).ToList();
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
+                Include(pm => pm.Event).Where(pm => pm.CourseId != null).ToList();
 
             return View(postMessages);
         }
@@ -219,7 +215,7 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
             PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Course).Include(pm => pm.Post).
-               Include(pm => pm.Event).Where(pm => pm.PostId != null).FirstOrDefault(pm => pm.Id == id);
+               Include(pm => pm.Event).Where(pm => pm.CourseId != null).FirstOrDefault(pm => pm.Id == id);
 
             if (message == null)
             {
