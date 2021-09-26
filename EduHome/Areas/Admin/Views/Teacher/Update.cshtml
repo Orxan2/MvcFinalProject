@@ -1,0 +1,142 @@
+﻿@model TeacherVM
+@{
+    ViewData["Title"] = "Update";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="grid simple">
+            <div class="grid-title no-border">
+                <h4>Input <span class="semi-bold">Helpers</span></h4>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"></a>
+                    <a href="#grid-config" data-toggle="modal" class="config"></a>
+                    <a href="javascript:;" class="reload"></a>
+                    <a href="javascript:;" class="remove"></a>
+                </div>
+            </div>
+            <div class="grid-body no-border">
+                <form enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" asp-for="Teacher.Id" />
+
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Fullname">Teacher's Fullname</label>
+                        <input asp-for="Teacher.Fullname" class="form-control" />
+                        <span asp-validation-for="Teacher.Fullname" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Professional">Teacher's Professional</label>
+                        <input asp-for="Teacher.Professional" class="form-control" />
+                        <span asp-validation-for="Teacher.Professional" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.AboutTeacher">About Teacher</label>
+                        <input asp-for="Teacher.AboutTeacher" class="form-control" />
+                        <span asp-validation-for="Teacher.AboutTeacher" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Experience">Teacher's Experience</label>
+                        <input asp-for="Teacher.Experience" class="form-control" />
+                        <span asp-validation-for="Teacher.Experience" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Hobbies">Teacher's Hobbies</label>
+                        <input asp-for="Teacher.Hobbies" class="form-control" />
+                        <span asp-validation-for="Teacher.Hobbies" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Faculty">Teacher's Faculty</label>
+                        <input asp-for="Teacher.Faculty" class="form-control" />
+                        <span asp-validation-for="Teacher.Faculty" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Phone">Teacher's Phone</label>
+                        <input asp-for="Teacher.Phone" class="form-control" />
+                        <span asp-validation-for="Teacher.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Photo">Teacher's Image</label>
+                        <input asp-for="Teacher.Photo" class="form-control" />
+                        <span asp-validation-for="Teacher.Photo" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Email">Teacher's Email Address</label>
+                        <input asp-for="Teacher.Email" class="form-control" />
+                        <span asp-validation-for="Teacher.Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Twitter">Teacher's Twitter Address</label>
+                        <input asp-for="Teacher.Twitter" class="form-control" />
+                        <span asp-validation-for="Teacher.Twitter" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Vimeo">Teacher's Vimeo Address</label>
+                        <input asp-for="Teacher.Vimeo" class="form-control" />
+                        <span asp-validation-for="Teacher.Vimeo" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Pinterest">Teacher's Pinterest Address</label>
+                        <input asp-for="Teacher.Pinterest" class="form-control" />
+                        <span asp-validation-for="Teacher.Pinterest" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Facebook">Teacher's Facebook Address</label>
+                        <input asp-for="Teacher.Facebook" class="form-control" />
+                        <span asp-validation-for="Teacher.Facebook" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Skype">Teacher's Skype Address</label>
+                        <input asp-for="Teacher.Skype" class="form-control" />
+                        <span asp-validation-for="Teacher.Skype" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Language">Teacher's Language Degree</label>
+                        <input asp-for="Teacher.Language" class="form-control" />
+                        <span asp-validation-for="Teacher.Language" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.TeamLeader">Teacher's Team Leader Degree</label>
+                        <input asp-for="Teacher.TeamLeader" class="form-control" />
+                        <span asp-validation-for="Teacher.TeamLeader" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Development">Teacher's Development Degree</label>
+                        <input asp-for="Teacher.Development" class="form-control" />
+                        <span asp-validation-for="Teacher.Development" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Design">Teacher's Design Degree</label>
+                        <input asp-for="Teacher.Design" class="form-control" />
+                        <span asp-validation-for="Teacher.Design" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Innovation">Teacher's Innovation Degree</label>
+                        <input asp-for="Teacher.Innovation" class="form-control" />
+                        <span asp-validation-for="Teacher.Innovation" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.Communication">Teacher's Communication Degree</label>
+                        <input asp-for="Teacher.Communication" class="form-control" />
+                        <span asp-validation-for="Teacher.Communication" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Teacher.CourseId">Course</label>
+                        <select asp-for="Teacher.CourseId" class="form-control">
+                            @foreach (Course item in Model.Courses)
+                            {
+                                <option value="@item.Id">@item.Title</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" asp-route-image="@Model.Teacher.Image">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section validate {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

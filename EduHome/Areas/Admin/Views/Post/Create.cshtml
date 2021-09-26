@@ -20,22 +20,22 @@
                     <div class="mb-3">
                         <label asp-for="Post.Title">Title</label>
                         <input asp-for="Post.Title" class="form-control" />
-                        <span asp-validation-for="Post.Title"></span>
+                        <span asp-validation-for="Post.Title" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Post.Details">Details</label>
                         <input asp-for="Post.Details" class="form-control" />
-                        <span asp-validation-for="Post.Details"></span>
+                        <span asp-validation-for="Post.Details" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Post.ByWhom">Author</label>
                         <input asp-for="Post.ByWhom" class="form-control" />
-                        <span asp-validation-for="Post.ByWhom"></span>
+                        <span asp-validation-for="Post.ByWhom" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Post.Photo">Image</label>
                         <input asp-for="Post.Photo" class="form-control" accept="image/*" />
-                        <span asp-validation-for="Post.Photo"></span>
+                        <span asp-validation-for="Post.Photo" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="Post.CourseId">Course</label>

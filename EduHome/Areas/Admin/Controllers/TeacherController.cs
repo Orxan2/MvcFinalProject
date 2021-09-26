@@ -1,10 +1,13 @@
 ﻿using EduHome.DataContext;
 using EduHome.Models.Entity;
+using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,43 +71,44 @@ namespace EduHome.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            CourseVM courseVM = new CourseVM
+            TeacherVM teacherVM = new TeacherVM
             {
-                Categories = _context.Categories.Include(c => c.Courses).ToList()
-            };
-            return View(courseVM);
+                Courses = _context.Courses.Include(c => c.Category).Include(c => c.Feature).Include(c => c.Events).
+                 Include(c => c.Posts).Include(c => c.Teachers).Include(c => c.PostMessages).ToList()
+        };
+            return View(teacherVM);
         }
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Create(CourseVM courseVM)
+        public IActionResult Create(TeacherVM teacherVM)
         {
             if (!ModelState.IsValid)
             {
-                return View(courseVM.Course);
+                return View(teacherVM.Teacher);
             }
-            if (!courseVM.Course.Photo.ContentType.Contains("image"))
+            if (!teacherVM.Teacher.Photo.ContentType.Contains("image"))
             {
                 return NotFound();
             }
-            if (courseVM.Course.Photo.Length / 1024 > 3000)
+            if (teacherVM.Teacher.Photo.Length / 1024 > 3000)
             {
                 return NotFound();
             }
 
-            string filename = Guid.NewGuid().ToString() + '-' + courseVM.Course.Photo.FileName;
+            string filename = Guid.NewGuid().ToString() + '-' + teacherVM.Teacher.Photo.FileName;
             string environment = _env.WebRootPath;
-            string newSlider = Path.Combine(environment, "img", "course", filename);
+            string newSlider = Path.Combine(environment, "img", "teacher", filename);
             using (FileStream file = new FileStream(newSlider, FileMode.Create))
             {
-                courseVM.Course.Photo.CopyTo(file);
+                teacherVM.Teacher.Photo.CopyTo(file);
             }
-            courseVM.Course.Image = filename;
+            teacherVM.Teacher.Image = filename;
 
-            _context.Courses.Add(courseVM.Course);
+            _context.Teachers.Add(teacherVM.Teacher);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index), courseVM);
+            return RedirectToAction(nameof(Index), teacherVM);
         }
         public IActionResult Update(int? id)
         {
@@ -113,18 +117,88 @@ namespace EduHome.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            CourseVM courseVM = new CourseVM
+            TeacherVM teacherVM = new TeacherVM
             {
-                Categories = _context.Categories.Include(c => c.Courses).ToList(),
-                Course = _context.Courses.Include(c => c.Category).Include(c => c.PostMessages).Include(c => c.Posts).
-                Include(c => c.Events).Include(c => c.Feature).Include(c => c.Teachers).FirstOrDefault(c => c.Id == id)
+                Courses = _context.Courses.Include(c => c.Category).Include(c => c.PostMessages).Include(c => c.Posts).
+                Include(c => c.Events).Include(c => c.Feature).Include(c => c.Teachers).ToList(),
+                Teacher = _context.Teachers.Include(t => t.Course).ThenInclude(c => c.Category).FirstOrDefault(t=>t.Id ==  id)
             };
-            if (courseVM.Course == null)
+            if (teacherVM.Teacher == null)
             {
                 return BadRequest();
             }
 
-            return View(courseVM);
+            return View(teacherVM);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Update(int? id, TeacherVM teacherVM)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //if user don't choose image program enter here
+            if (teacherVM.Teacher.Photo == null)
+            {
+                teacherVM.Teacher.Image = teacherVM.Image;
+
+                ModelState["Teacher.Photo"].ValidationState = ModelValidationState.Valid;
+                if (!ModelState.IsValid)
+                {
+                    return View(teacherVM);
+                }
+                _context.Teachers.Update(teacherVM.Teacher);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index), teacherVM);
+            }
+
+            if (id != teacherVM.Teacher.Id)
+            {
+                return NotFound();
+            }
+
+            if (!teacherVM.Teacher.Photo.ContentType.Contains("image"))
+            {
+                return NotFound();
+            }
+            if (teacherVM.Teacher.Photo.Length / 1024 > 3000)
+            {
+                return NotFound();
+            }
+
+            //removing old image from local folder
+            string environment = _env.WebRootPath;
+            string folderPath = Path.Combine(environment, "img", "teacher", teacherVM.Image);
+            FileInfo oldFile = new FileInfo(folderPath);
+            if (System.IO.File.Exists(folderPath))
+            {
+                oldFile.Delete();
+            };
+
+            //coping new image in local folder
+            string filename = Guid.NewGuid().ToString() + '-' + teacherVM.Teacher.Photo.FileName;
+            string newSlider = Path.Combine(environment, "img", "teacher", filename);
+            using (FileStream newFile = new FileStream(newSlider, FileMode.Create))
+            {
+                teacherVM.Teacher.Photo.CopyTo(newFile);
+            }
+
+            //new image and category initiliazing to Post class
+            teacherVM.Teacher.Image = filename;
+
+
+            if (!ModelState.IsValid)
+            {
+                return View(teacherVM.Teacher);
+            }
+            _context.Teachers.Update(teacherVM.Teacher);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index), teacherVM);
         }
     }
 }
