@@ -34,7 +34,8 @@ namespace EduHome.DataContext
         public DbSet<Teacher> Teachers { get; set; }     
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Header> Header { get; set; }
-        //public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
+        public DbSet<Subscribe> Subscribes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,6 +55,12 @@ namespace EduHome.DataContext
 
             modelBuilder.Entity<Course>().
              Property(c => c.CreatedDate).HasColumnType("Date");
+
+            modelBuilder.Entity<Subscriber>().
+            Property(c => c.CreatedDate).HasColumnType("Date");
+
+            modelBuilder.Entity<Subscriber>().
+                Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
             modelBuilder.Entity<Post>().
                Property(p => p.IsDeleted).HasDefaultValue(false);
@@ -424,6 +431,15 @@ new Course
               ContactId = 1
           })
       );
+
+            modelBuilder.Entity<Subscribe>(e => e.HasData(
+                        new Subscribe
+                        {
+                            Id = 1,
+                            Title = "SUBSCRIBE OUR NEWSLETTER",
+                            Text = "I must explain to you how all this mistaken idea"
+                        })
+                    );
         }
     }
 }

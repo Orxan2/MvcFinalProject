@@ -1,0 +1,35 @@
+﻿@model SubscribeVM
+@{
+    ViewData["Title"] = "Default";
+}
+
+<!-- Subscribe Start -->
+<div class="subscribe-area pt-58 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="subscribe-content section-title text-center">
+                    <h2>@Model.Subscribe.Title</h2>
+                    <p>@Model.Subscribe.Text</p>
+                </div>
+                <div class="newsletter-form mc_embed_signup">
+                    <form asp-controller="Home" asp-action="Subscribe" >
+                        <div class="mc-form">
+                            <input asp-for="Subscriber.Email" class="email" placeholder="Enter your e-mail address" required>
+                            <div class="mc-news" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
+                            <button id="mc-embedded-subscribe" class="default-btn" type="submit"><span>subscribe</span></button>
+                        </div>
+                    </form>
+                    <!-- mailchimp-alerts Start -->
+                    <div class="mailchimp-alerts">
+                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+                    </div>
+                    <!-- mailchimp-alerts end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Subscribe End -->

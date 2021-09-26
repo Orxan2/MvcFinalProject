@@ -4,14 +4,16 @@ using EduHome.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    partial class EduhomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210926123701_r=AdminRegisterAdded")]
+    partial class rAdminRegisterAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -838,56 +840,6 @@ namespace EduHome.Migrations
                             Image = "speaker2.jpg",
                             Professional = "Developer, STD"
                         });
-                });
-
-            modelBuilder.Entity("EduHome.Models.Entity.Subscribe", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subscribes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Text = "I must explain to you how all this mistaken idea",
-                            Title = "SUBSCRIBE OUR NEWSLETTER"
-                        });
-                });
-
-            modelBuilder.Entity("EduHome.Models.Entity.Subscriber", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
-                        .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Subscribers");
                 });
 
             modelBuilder.Entity("EduHome.Models.Entity.Teacher", b =>

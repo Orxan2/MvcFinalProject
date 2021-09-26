@@ -4,14 +4,16 @@ using EduHome.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduHome.Migrations
 {
     [DbContext(typeof(EduhomeDbContext))]
-    partial class EduhomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210926151952_SubscribeTableUpdated")]
+    partial class SubscribeTableUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -856,14 +858,6 @@ namespace EduHome.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subscribes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Text = "I must explain to you how all this mistaken idea",
-                            Title = "SUBSCRIBE OUR NEWSLETTER"
-                        });
                 });
 
             modelBuilder.Entity("EduHome.Models.Entity.Subscriber", b =>
@@ -873,17 +867,9 @@ namespace EduHome.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Date")
-                        .HasDefaultValueSql("dateadd(hour,4,getutcdate())");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

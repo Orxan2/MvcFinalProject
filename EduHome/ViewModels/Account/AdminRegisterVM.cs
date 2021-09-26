@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EduHome.ViewModels.Account
 {
-    public class RegisterVM
+    public class AdminRegisterVM
     {
         [Required, StringLength(maximumLength: 100)]
         public string FullName { get; set; }
@@ -18,5 +18,8 @@ namespace EduHome.ViewModels.Account
         public string Password { get; set; }
         [Required(ErrorMessage = "Confirm Password mustn't be empty"), DataType(DataType.Password), Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
+        public List<RoleVM> Roles{ get; set; }
+        [Required]
+        public string Role { get; set; }
     }
 }
