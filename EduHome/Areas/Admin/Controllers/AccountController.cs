@@ -14,15 +14,14 @@ namespace EduHome.Areas.Admin.Controllers
     [Area("admin")]
     public class AccountController : Controller
     {
-        private readonly EduhomeDbContext _db;
         public UserManager<AppUser> _userManager { get; }
         public SignInManager<AppUser> _signInManager { get; }
         public RoleManager<IdentityRole> _userRole { get; }
-        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> userRole)
+        public AccountController(UserManager<AppUser> userManager, RoleManager<IdentityRole> userRole, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _userRole = userRole;
-            //_signInManager = signInManager;
+            _signInManager = signInManager;
             //_db = db;
         }
         public IActionResult Register()
@@ -34,6 +33,8 @@ namespace EduHome.Areas.Admin.Controllers
             {
                 admin.Roles.Add(new RoleVM { Name = role});
             }
+            //CreateAsync();
+
             return View(admin);
         }
 
@@ -71,43 +72,60 @@ namespace EduHome.Areas.Admin.Controllers
                 }
                 return View(admin);       
              }
+
             await _userManager.AddToRoleAsync(user, register.Role);
            
-            return RedirectToAction(nameof(Index), register);
+            return View(nameof(Login));
         }
 
-        //public IActionResult Login()
+        //public async Task CreateAsync()
         //{
-        //    return View();
+        //    //await _userRole.CreateAsync(new IdentityRole(Roles.SuperAdmin.ToString()));
+        //    await _userRole.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
+        //    await _userRole.CreateAsync(new IdentityRole(Roles.User.ToString()));
         //}
-        //[HttpPost]
-        //[AutoValidateAntiforgeryToken]
-        //public async Task<IActionResult> Login(LoginViewModel login)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(login);
-        //    }
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> Login(AdminLoginVM adminLogin)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(adminLogin);
+            }
 
-        //    var user = await _userManager.FindByNameAsync(login.Username);
+            var user = await _userManager.FindByNameAsync(adminLogin.Username);
 
-        //    if (user == null)
-        //    {
-        //        ModelState.AddModelError("", "Username or Password is not correct");
-        //    }
-        //    var result = await _signInManager.PasswordSignInAsync(user, login.Password, false, false);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Username or Password is not correct");
+                return View(adminLogin);
+            }
+            if ((await _userManager.GetRolesAsync(user))[0] == Roles.SuperAdmin.ToString() || 
+                (await _userManager.GetRolesAsync(user))[0] == Roles.Admin.ToString())
+            {
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(user, adminLogin.Password, false, false);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        ModelState.AddModelError("", "Username or Password is not correct");
-        //        return View(login);
-        //    }
-        //    return RedirectToAction("Index", "Home");
-        //}
-        //public async Task<IActionResult> LogOutAsync()
-        //{
-        //    await _signInManager.SignOutAsync();
-        //    return RedirectToAction(nameof(Index), nameof(HomeController));
-        //}
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", "Username or Password is not correct");
+                    return View(adminLogin);
+                }
+                return RedirectToAction("Index", "post");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Username or Password is not correct");
+                return View(adminLogin);
+            }
+        }
+        public async Task<IActionResult> LogOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Index),"post");
+        }
     }
 }

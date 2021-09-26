@@ -1,5 +1,6 @@
 ﻿using EduHome.DataContext;
 using EduHome.Helpers;
+using EduHome.Helpers.Enums;
 using EduHome.Models.Entity;
 using EduHome.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
@@ -54,17 +55,8 @@ namespace EduHome.Controllers
 
                 return View(register);
             }
-            //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = user.Email }, Request.Scheme);
-            //EmailHelper emailHelper = new EmailHelper();
-            //bool emailResponse = emailHelper.SendEmail(user.Email, confirmationLink);
+            await _userManager.AddToRoleAsync(user, Roles.User.ToString());
 
-            //if (emailResponse)
-            //    return RedirectToAction("Index");
-            //else
-            //{
-            //    // log email failed 
-            //}
             return RedirectToAction(nameof(Login), register);
         }
 
