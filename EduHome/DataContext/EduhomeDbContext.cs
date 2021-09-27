@@ -60,6 +60,9 @@ namespace EduHome.DataContext
             Property(c => c.CreatedDate).HasColumnType("Date");
 
             modelBuilder.Entity<Subscriber>().
+            Property(c => c.IsDeleted).HasDefaultValue(false);
+
+            modelBuilder.Entity<Subscriber>().
                 Property(c => c.CreatedDate).HasDefaultValueSql("dateadd(hour,4,getutcdate())");
 
             modelBuilder.Entity<Post>().
@@ -69,7 +72,7 @@ namespace EduHome.DataContext
               Property(a => a.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<PostMessage>().
-            Property(pm => pm.IsDeleted).HasDefaultValue(true);
+            Property(pm => pm.IsDeleted).HasDefaultValue(false);
 
             modelBuilder.Entity<PostMessage>().
             Property(pm => pm.IsReadable).HasDefaultValue(false);
@@ -383,7 +386,8 @@ new Course
                  Pinterest = "pinterest.com",
                  Twitter = "twitter.com",
                  Vimeo = "vimeo.com", 
-                 Image = "teacher1.jpg"                 
+                 Image = "teacher1.jpg" ,
+                 CourseId = 1
 
              })
          );

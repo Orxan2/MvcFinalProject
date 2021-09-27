@@ -31,13 +31,15 @@ namespace EduHome.Controllers
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public IActionResult Search(string search)
-        {                     
-            
+        {
+
             CourseSearchingVM course = new CourseSearchingVM
             {
                 quantity = 9,
                 courseTitle = search
             };
+
+
             return View(nameof(Index), course);
         }
 

@@ -25,7 +25,7 @@ namespace EduHome.ViewComponents
 
             if (courseSearching.courseTitle!= null)
             {
-                courses = courses.Where(c => c.Title.Contains(courseSearching.courseTitle)).ToList();
+                courses = courses.Where(c => c.Title.ToUpper().Contains(courseSearching.courseTitle.ToUpper())).ToList();
             }        
             return View(await Task.FromResult(courses));
         }

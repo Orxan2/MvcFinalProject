@@ -34,11 +34,11 @@
                         <tr>
                             <td class="clickable v-align-middle">
                                 <div class="check-success text-center">
-                                    <a asp-action="MakeDeleteOrActive" asp-route-id="@subscriber.Id" class="btn p-2 @(subscriber.IsDeleted?" bg-danger text-white":"bg-success text-white")"><i class="@(subscriber.IsDeleted?" fa fa-lock":"fa fa-unlock")"></i></a>
+                                    <a asp-action="MakeDeleteOrActive" asp-route-id="@subscriber.Id" class="btn p-2 @(subscriber.IsDeleted?" bg-success text-white":"bg-danger text-white")"><i class="@(subscriber.IsDeleted?" fa fa-unlock":"fa fa-lock")"></i></a>
                                 </div>
                             </td>
                             <td class="clickable v-align-middle">
-                                <p class="py-2 text-center">@(subscriber.IsDeleted?"Active":"Deactive")</p>
+                                <p class="py-2 text-center">@(subscriber.IsDeleted? "Deactive" : "Active")</p>
                             </td>
                             <td class="clickable v-align-middle">
                                 <p class="py-2 text-center">@subscriber.Email</p>
