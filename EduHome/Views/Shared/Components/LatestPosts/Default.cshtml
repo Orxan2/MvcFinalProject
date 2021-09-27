@@ -27,7 +27,7 @@
         </div>
         <div class="single-blog-widget mb-47">
             <div class="single-blog-banner">
-                <a href="blog-details.html" id="blog"><img src="~/img/blog/blog-img.jpg" alt="blog"></a>
+                <a asp-controller="Courses" asp-action="Index" id="blog"><img src="~/img/blog/blog-img.jpg" alt="blog"></a>
                 <h2>best<br> eductaion<br> theme</h2>
             </div>
         </div>
@@ -37,7 +37,7 @@
             {
                 <div class="single-post mb-30 d-flex align-items-center">
                     <div class="single-post-img">
-                        <a href="blog-details.html">
+                        <a asp-controller="Post" asp-action="PostDetail" asp-route-id="@post.Id">
                             <img src="~/img/blog/@post.Image" width="125" alt="post">
                             <div class="blog-hover">
                                 <i class="fa fa-link"></i>
@@ -54,12 +54,12 @@
         <div class="single-blog-widget">
             <h3>tags</h3>
             <div class="single-tag">
-                <a href="blog-details.html" class="mr-10 mb-10">course</a>
-                <a href="blog-details.html" class="mr-10 mb-10">education</a>
-                <a href="blog-details.html" class="mb-10">teachers</a>
-                <a href="blog-details.html" class="mr-10">learning</a>
-                <a href="blog-details.html" class="mr-10">university</a>
-                <a href="blog-details.html">events</a>
+                <a asp-controller="Courses" asp-action="Index" class="mr-10 mb-10">course</a>
+                <a asp-controller="Courses" asp-action="Index" class="mr-10 mb-10">education</a>
+                <a asp-controller="Teacher" asp-action="Index" class="mb-10">teachers</a>
+                <a asp-controller="Post" asp-action="Index" class="mr-10">learning</a>
+                <a asp-controller="Teacher" asp-action="Index" class="mr-10">university</a>
+                <a asp-controller="Event" asp-action="Index">events</a>
             </div>
         </div>
     </div>
