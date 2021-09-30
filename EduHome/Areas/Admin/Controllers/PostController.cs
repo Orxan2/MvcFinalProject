@@ -1,4 +1,6 @@
 ﻿using EduHome.DataContext;
+using EduHome.Helpers.Methods;
+using EduHome.Models.Base;
 using EduHome.Models.Entity;
 using EduHome.ViewModels;
 using Microsoft.AspNetCore.Hosting;
@@ -108,6 +110,20 @@ namespace EduHome.Areas.Admin.Controllers
 
             _context.Posts.Add(postCategory.Post);
             _context.SaveChanges();
+
+            List<Subscriber> subscribers = _context.Subscribers.ToList();
+
+            foreach (var subscriber in subscribers.Where(s=>s.IsDeleted == false))
+            {
+                BaseMessage message = new BaseMessage();
+                message.Email = subscriber.Email;
+                message.Subject = "A post created";
+                message.Message = "We created a post.You can see if you want";
+
+                MailOperations.SendMessage(message);
+               
+            }
+
 
             return RedirectToAction(nameof(Index), postCategory);
         }
