@@ -29,22 +29,27 @@
                 <tbody>
                     @foreach (var message in Model)
                     {
-                        <tr>
-                            <td class="clickable v-align-middle">
-                                <div class="check-success">
-                                    <a asp-action="MessageDelete" asp-route-id="@message.Id" class="btn btn-danger-dark p-2 d-inline-block"><i class="fa fa-trash-o"></i></a>
-                                </div>
-                            </td>
-                            <td class="clickable v-align-middle">
-                                <p class="py-2">@message.Name</p>
-                            </td>
-                            <td class="clickable tablefull v-align-middle">
-                                <p class="muted py-2"> @(message.Message.Length > 20 ? message.Message.Substring(0, 20) : message.Message)</p>
-                            </td>
-                            <td class="clickable">
-                                <p class="muted py-2">Yesterday</p>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="clickable v-align-middle @(message.IsReadable?"":"fw-bolder")">
+                            <div class="check-success">
+                                <a asp-action="MessageDelete" asp-route-id="@message.Id" class="btn btn-danger-dark p-2 d-inline-block"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        </td>
+                        <td class="clickable v-align-middle @(message.IsReadable?"":"fw-bolder")">
+                            <div class="check-success">
+                                <a asp-action="MarkRead" asp-route-id="@message.Id" class="btn bg-transparent text-dark p-2 d-inline-block"><i class="fa fa-envelope-o"></i></a>
+                            </div>
+                        </td>
+                        <td class="clickable v-align-middle @(message.IsReadable?"":"fw-bolder")">
+                            <p class="py-2">@message.Name</p>
+                        </td>
+                        <td class="clickable tablefull v-align-middle">
+                            <p class="muted @(message.IsReadable?"":"fw-bolder") py-2"> @(message.Message.Length > 20 ? message.Message.Substring(0, 20) : message.Message)</p>
+                        </td>
+                        <td class="clickable @(message.IsReadable?"":"fw-bolder")">
+                            <p class="muted py-2">Yesterday</p>
+                        </td>
+                    </tr>
                     }
 
                 </tbody>

@@ -192,5 +192,31 @@ namespace EduHome.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Messages));
         }
+
+        public IActionResult MarkRead(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            List<PostMessage> postMessages = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
+               Include(pm => pm.Event).Where(pm => pm.ContactId != null && pm.IsDeleted == false).ToList();
+
+            PostMessage message = _context.PostMessages.Include(pm => pm.Contact).Include(pm => pm.Post).
+                  Include(pm => pm.Event).Where(pm => pm.ContactId != null && pm.IsDeleted == false).FirstOrDefault(pm => pm.Id == id);
+
+            if (message == null)
+            {
+                return BadRequest();
+            }
+
+            message.IsReadable = true;
+
+            _context.PostMessages.Update(message);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Messages));
+        }
     }
 }
